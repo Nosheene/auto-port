@@ -42,7 +42,7 @@ test.describe("Portfolio QA Automation", () => {
 
     await page.getByTestId("filter-all").click();
     await expect(page.getByTestId("project-card-fintech-scaleup")).toBeVisible();
-    await expect(page.getByTestId("project-artifact-fintech-scaleup")).toContainText("-50 %");
+    await expect(page.getByTestId("project-card-fintech-scaleup")).toContainText("-50 %");
     await expect(page.getByTestId("project-artifact-medtech-mobile")).toContainText("95 %");
   });
 

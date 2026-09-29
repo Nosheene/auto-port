@@ -21,7 +21,7 @@ import { profile } from "@/lib/profile";
 import { useHydrated } from "@/lib/use-hydrated";
 
 const controlClass =
-  "h-11 rounded-lg border-border bg-background px-3 text-sm md:text-sm dark:bg-background";
+  "h-11 rounded-lg border-border bg-background px-3 text-sm md:text-sm dark:border-white/15 dark:bg-white/5";
 
 export function Contact() {
   const formId = useId();
@@ -196,7 +196,7 @@ export function Contact() {
                 value={values.subject}
                 aria-invalid={Boolean(errors.subject)}
                 aria-describedby={errors.subject ? "contact-subject-error" : undefined}
-                className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:border-white/15 dark:bg-white/5"
                 onChange={(event) => updateField("subject", event.target.value)}
               >
                 <option value="">Choisir un sujet</option>
@@ -227,7 +227,7 @@ export function Contact() {
                 value={values.message}
                 aria-invalid={Boolean(errors.message)}
                 aria-describedby={errors.message ? "contact-message-error" : undefined}
-                className="min-h-36 rounded-lg border-border bg-background px-3 py-3 text-sm md:text-sm dark:bg-background"
+                className="min-h-36 rounded-lg border-border bg-background px-3 py-3 text-sm md:text-sm dark:border-white/15 dark:bg-white/5"
                 onChange={(event) => updateField("message", event.target.value)}
               />
               {errors.message ? (

@@ -52,18 +52,18 @@ export function Hero() {
             parcours.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
               href="#projets"
               data-testid="cta-projects"
-              className={cn(buttonVariants({ size: "lg" }), "h-11 px-5")}
+              className={cn(buttonVariants({ size: "lg" }), "h-11 w-full px-5 sm:w-auto")}
             >
               Voir les études de cas
             </a>
             <a
               href="#contact"
               data-testid="cta-contact"
-              className={cn(buttonVariants({ size: "lg", variant: "outline" }), "h-11 px-5")}
+              className={cn(buttonVariants({ size: "lg", variant: "outline" }), "h-11 w-full px-5 sm:w-auto")}
             >
               Écrire un message
             </a>
@@ -72,10 +72,7 @@ export function Hero() {
               data-testid="cta-linkedin"
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ size: "lg", variant: "ghost" }),
-                "h-11 px-4",
-              )}
+              className={cn(buttonVariants({ size: "lg", variant: "ghost" }), "h-11 px-4")}
             >
               LinkedIn
               <ArrowUpRight className="size-4" aria-hidden />

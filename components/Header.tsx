@@ -40,7 +40,7 @@ export function Header() {
           aria-label="Sections"
           className={`${
             open ? "flex" : "hidden"
-          } absolute inset-x-0 top-16 flex-col gap-1 border-b border-border bg-background p-4 md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0`}
+          } absolute inset-x-0 top-16 z-30 flex-col gap-1 border-b border-border bg-background p-4 shadow-lg md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0 md:shadow-none`}
         >
           {links.map((link) => (
             <a
