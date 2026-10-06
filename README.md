@@ -25,7 +25,7 @@ Les tests de bout en bout ne doivent pas casser parce qu'un libellé a été ref
 | Contact | `contact-name`, `contact-email`, `contact-subject`, `contact-message`, `contact-submit` |
 | Retours | `contact-success`, `contact-error`, `contact-name-error` |
 
-Le formulaire est volontairement simulé : aucun e-mail n'est envoyé. Un message qui contient le jeton `ERREUR_RESEAU` force le chemin d'échec, pour pouvoir le tester sans backend.
+Le formulaire envoie un vrai e-mail. `POST /api/contact` valide les champs, puis transmet le message à [FormSubmit](https://formsubmit.co/), qui le dépose sur mohammadnosheene@gmail.com. Aucune clé API n'est nécessaire. Au premier envoi, FormSubmit demande une confirmation dans cette boîte : le lien n'est à ouvrir qu'une fois. Le téléphone reste un lien `tel:` (`06 84 47 71 19`). Si l'envoi automatique échoue, le formulaire propose un `mailto:` déjà rempli.
 
 ## Arborescence
 
@@ -65,7 +65,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, envoi simulé et échec simulé.
+La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, envoi et échec. Les tests interceptent `/api/contact` pour ne pas envoyer de vrai e-mail.
 
 Le rapport HTML est généré dans `playwright-report/`.
 
@@ -81,4 +81,5 @@ npx playwright show-report
 
 Nosheene Mohammad — Ozoir-la-Ferrière  
 [mohammadnosheene@gmail.com](mailto:mohammadnosheene@gmail.com)  
+[06 84 47 71 19](tel:+33684477119)  
 [LinkedIn](https://www.linkedin.com/in/nosheene-mohammad-498980160)

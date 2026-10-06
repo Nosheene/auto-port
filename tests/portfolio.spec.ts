@@ -26,6 +26,12 @@ test.describe("Portfolio QA Automation", () => {
       "https://github.com/Nosheene/Restaurant",
     );
     await expect(page.getByTestId("project-card-fintech-scaleup")).toHaveCount(0);
+    await expect(page.getByTestId("contact-email-link")).toHaveAttribute(
+      "href",
+      "mailto:mohammadnosheene@gmail.com",
+    );
+    await expect(page.getByTestId("contact-phone-link")).toHaveAttribute("href", "tel:+33684477119");
+    await expect(page.getByTestId("footer-phone")).toHaveAttribute("href", "tel:+33684477119");
   });
 
   test("bascule le thème sombre et clair", async ({ page }) => {
@@ -71,11 +77,28 @@ test.describe("Portfolio QA Automation", () => {
     await expect(page.getByTestId("contact-success")).toHaveCount(0);
   });
 
-  test("soumet le formulaire de contact", async ({ page }) => {
+  test("envoie le formulaire de contact par e-mail", async ({ page }) => {
+    await page.route("**/api/contact", async (route) => {
+      const body = route.request().postDataJSON() as {
+        email?: string;
+        message?: string;
+        subject?: string;
+      };
+      expect(body.email).toBe("camille.martin@example.com");
+      expect(body.subject).toBe("mission");
+      expect(body.message).toContain("automatisation");
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: true }),
+      });
+    });
+
     await page.goto("/");
     await page.getByTestId("nav-contact").click();
 
     await expect(page.getByTestId("contact-form")).toBeVisible();
+    await expect(page.getByTestId("contact-call")).toHaveAttribute("href", "tel:+33684477119");
     await page.getByTestId("contact-name").fill("Camille Martin");
     await page.getByTestId("contact-email").fill("camille.martin@example.com");
     await page.getByTestId("contact-subject").selectOption("mission");
@@ -85,7 +108,9 @@ test.describe("Portfolio QA Automation", () => {
     await page.getByTestId("contact-submit").click();
 
     await expect(page.getByTestId("contact-success")).toBeVisible();
-    await expect(page.getByTestId("contact-success")).toContainText("simulé");
+    await expect(page.getByTestId("contact-success")).toContainText("mohammadnosheene@gmail.com");
+    await expect(page.getByTestId("contact-success")).toContainText("envoyé");
+    await expect(page.getByTestId("contact-success-call")).toHaveAttribute("href", "tel:+33684477119");
     await expect(page.getByTestId("contact-form")).toBeHidden();
 
     await page.getByTestId("contact-reset").click();
@@ -93,20 +118,32 @@ test.describe("Portfolio QA Automation", () => {
     await expect(page.getByTestId("contact-name")).toHaveValue("");
   });
 
-  test("couvre l'échec d'envoi simulé", async ({ page }) => {
+  test("signale un échec d'envoi et garde le message", async ({ page }) => {
+    await page.route("**/api/contact", async (route) => {
+      await route.fulfill({
+        status: 502,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: false }),
+      });
+    });
+
     await page.goto("/");
 
     await page.getByTestId("contact-name").fill("Camille Martin");
     await page.getByTestId("contact-email").fill("camille.martin@example.com");
     await page.getByTestId("contact-subject").selectOption("echange");
     await page.getByTestId("contact-message").fill(
-      "Message de test avec le jeton ERREUR_RESEAU pour le scénario d'échec.",
+      "Bonjour, je souhaite échanger sur une mission d'automatisation Playwright.",
     );
     await page.getByTestId("contact-submit").click();
 
-    await expect(page.getByTestId("contact-error")).toContainText("échoué");
+    await expect(page.getByTestId("contact-error")).toContainText("n'a pas abouti");
+    await expect(page.getByTestId("contact-mailto-fallback")).toHaveAttribute(
+      "href",
+      /^mailto:mohammadnosheene@gmail.com\?/,
+    );
     await expect(page.getByTestId("contact-success")).toHaveCount(0);
-    await expect(page.getByTestId("contact-message")).toHaveValue(/ERREUR_RESEAU/);
+    await expect(page.getByTestId("contact-message")).toHaveValue(/automatisation/);
   });
 
   test("ouvre la navigation sur un écran étroit", async ({ page }) => {

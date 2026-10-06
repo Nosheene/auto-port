@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  buildContactMailto,
   contactSubjects,
   emptyContactValues,
   hasContactErrors,
-  NETWORK_ERROR_TOKEN,
-  simulateContactSubmit,
+  submitContact,
   validateContact,
   type ContactErrors,
   type ContactField,
@@ -28,6 +28,7 @@ export function Contact() {
   const [values, setValues] = useState<ContactValues>(emptyContactValues);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [company, setCompany] = useState("");
   const ready = useHydrated();
 
   function updateField(field: ContactField, value: string) {
@@ -52,13 +53,14 @@ export function Contact() {
     }
 
     setStatus("submitting");
-    const result = await simulateContactSubmit(values);
-    setStatus(result === "success" ? "success" : "error");
+    const result = await submitContact(values, company);
+    setStatus(result);
   }
 
   function resetForm() {
     setValues(emptyContactValues);
     setErrors({});
+    setCompany("");
     setStatus("idle");
   }
 
@@ -74,8 +76,8 @@ export function Contact() {
             Un message court suffit pour démarrer.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Mission d&apos;automatisation, recette ou échange sur une suite de tests. Je réponds
-            sous deux jours ouvrés.
+            Le formulaire envoie un e-mail sur {profile.email}. Vous pouvez aussi appeler
+            directement. Je réponds sous deux jours ouvrés.
           </p>
           <ul className="mt-8 space-y-3 text-sm">
             <li>
@@ -117,23 +119,32 @@ export function Contact() {
           <div
             data-testid="contact-success"
             role="status"
-            className="rounded-2xl border border-pass/40 bg-card p-6"
+            className="rounded-2xl border border-primary/40 bg-card p-6"
           >
-            <p className="font-mono text-xs text-pass uppercase">Succès</p>
-            <h3 className="mt-3 font-heading text-2xl">Message prêt.</h3>
+            <p className="font-mono text-xs text-primary uppercase">Envoyé</p>
+            <h3 className="mt-3 font-heading text-2xl">Message envoyé.</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              L&apos;envoi est simulé dans ce portfolio : aucun e-mail n&apos;est transmis. Le
-              scénario existe pour que la suite Playwright puisse vérifier le succès.
+              Il est parti vers {profile.email}. Je vous réponds sous deux jours ouvrés. Pour
+              joindre tout de suite, appelez le {profile.phoneDisplay}.
             </p>
-            <Button
-              type="button"
-              data-testid="contact-reset"
-              variant="outline"
-              className="mt-6 h-11 px-4"
-              onClick={resetForm}
-            >
-              Écrire un autre message
-            </Button>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={profile.phoneHref}
+                data-testid="contact-success-call"
+                className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+              >
+                Appeler
+              </a>
+              <Button
+                type="button"
+                data-testid="contact-reset"
+                variant="outline"
+                className="h-11 px-4"
+                onClick={resetForm}
+              >
+                Écrire un autre message
+              </Button>
+            </div>
           </div>
         ) : (
           <form
@@ -141,7 +152,7 @@ export function Contact() {
             data-hydrated={ready ? "true" : "false"}
             noValidate
             onSubmit={handleSubmit}
-            className="rounded-2xl border border-border bg-card p-5 md:p-6"
+            className="relative rounded-2xl border border-border bg-card p-5 md:p-6"
             aria-describedby={validationFailed || networkFailed ? "contact-status" : undefined}
           >
             <div className="grid gap-4 sm:grid-cols-2">
@@ -217,6 +228,18 @@ export function Contact() {
               ) : null}
             </div>
 
+            <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor={`${formId}-company`}>Société</label>
+              <input
+                id={`${formId}-company`}
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
+              />
+            </div>
+
             <div className="mt-4 grid gap-2">
               <Label htmlFor={`${formId}-message`}>Message</Label>
               <Textarea
@@ -248,21 +271,39 @@ export function Contact() {
             ) : null}
 
             {networkFailed ? (
-              <p id="contact-status" data-testid="contact-error" role="alert" className="mt-4 text-sm text-fail">
-                L&apos;envoi a échoué. Le message est resté dans le formulaire, vous pouvez
-                réessayer. Le jeton {NETWORK_ERROR_TOKEN} sert uniquement à ce scénario de test.
-              </p>
+              <div id="contact-status" data-testid="contact-error" role="alert" className="mt-4 space-y-2">
+                <p className="text-sm text-fail">
+                  L&apos;envoi n&apos;a pas abouti. Le message est resté dans le formulaire : réessayez,
+                  ou envoyez-le depuis votre messagerie.
+                </p>
+                <a
+                  href={buildContactMailto(values, profile.email)}
+                  data-testid="contact-mailto-fallback"
+                  className="inline-flex text-sm text-primary underline decoration-primary/40 underline-offset-4"
+                >
+                  Envoyer depuis ma messagerie
+                </a>
+              </div>
             ) : null}
 
-            <Button
-              type="submit"
-              data-testid="contact-submit"
-              className="mt-5 h-11 px-5"
-              disabled={!ready || status === "submitting"}
-              aria-busy={status === "submitting"}
-            >
-              {status === "submitting" ? "Envoi…" : "Envoyer le message"}
-            </Button>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <Button
+                type="submit"
+                data-testid="contact-submit"
+                className="h-11 px-5"
+                disabled={!ready || status === "submitting"}
+                aria-busy={status === "submitting"}
+              >
+                {status === "submitting" ? "Envoi…" : "Envoyer le message"}
+              </Button>
+              <a
+                href={profile.phoneHref}
+                data-testid="contact-call"
+                className="inline-flex h-11 items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-medium hover:bg-muted dark:border-white/15 dark:bg-white/5"
+              >
+                Appeler {profile.phoneDisplay}
+              </a>
+            </div>
           </form>
         )}
       </div>

@@ -70,7 +70,7 @@
   --border: oklch(0.88 0.012 95);
   --input: oklch(0.88 0.012 95);
   --ring: #8c3a22;
-  --pass: oklch(0.42 0.1 165);
+  --pass: #8c3a22;
   --warn: oklch(0.52 0.11 75);
   --fail: oklch(0.5 0.17 25);
   --chart-1: oklch(0.87 0 0);
@@ -108,7 +108,7 @@
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 16%);
   --ring: #e8b08a;
-  --pass: oklch(0.84 0.13 165);
+  --pass: #e8b08a;
   --warn: oklch(0.86 0.12 85);
   --fail: oklch(0.78 0.14 22);
   --chart-1: oklch(0.87 0 0);

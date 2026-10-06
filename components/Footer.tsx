@@ -16,6 +16,13 @@ export function Footer() {
             E-mail
           </a>
           <a
+            href={profile.phoneHref}
+            data-testid="footer-phone"
+            className="underline decoration-border underline-offset-4 hover:text-foreground"
+          >
+            {profile.phoneDisplay}
+          </a>
+          <a
             href={profile.linkedin}
             data-testid="footer-linkedin"
             target="_blank"

@@ -1,6 +1,3 @@
-/** Jeton documenté pour exercer le chemin d'erreur sans backend. */
-export const NETWORK_ERROR_TOKEN = "ERREUR_RESEAU";
-
 export const contactSubjects = [
   { value: "mission", label: "Mission QA / automatisation" },
   { value: "echange", label: "Échange technique" },
@@ -50,23 +47,47 @@ export function validateContact(values: ContactValues): ContactErrors {
 
   if (message.length < 20) {
     errors.message = "Écrivez au moins 20 caractères pour que je puisse vous répondre utilement.";
+  } else if (message.length > 4000) {
+    errors.message = "Le message dépasse 4 000 caractères.";
   }
 
   return errors;
+}
+
+export function contactSubjectLabel(value: string): string {
+  return contactSubjects.find((subject) => subject.value === value)?.label ?? value;
+}
+
+export function buildContactMailto(values: ContactValues, to: string): string {
+  const subject = `Portfolio — ${contactSubjectLabel(values.subject)} — ${values.name.trim()}`;
+  const body = `${values.message.trim()}\n\n— ${values.name.trim()}\n${values.email.trim()}`;
+  const params = new URLSearchParams({ subject, body });
+  return `mailto:${to}?${params.toString()}`;
 }
 
 export function hasContactErrors(errors: ContactErrors): boolean {
   return Object.keys(errors).length > 0;
 }
 
-export async function simulateContactSubmit(values: ContactValues): Promise<"success" | "error"> {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 400);
-  });
+export async function submitContact(
+  values: ContactValues,
+  company = "",
+): Promise<"success" | "error"> {
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ ...values, company }),
+    });
 
-  if (values.message.includes(NETWORK_ERROR_TOKEN)) {
+    if (!response.ok) return "error";
+
+    const data = (await response.json()) as { ok?: boolean };
+    return data.ok ? "success" : "error";
+  } catch {
     return "error";
   }
-
-  return "success";
 }
