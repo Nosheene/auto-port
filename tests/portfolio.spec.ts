@@ -1,9 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-function decodeMailHref(value: string | null) {
-  return decodeURIComponent((value ?? "").replace(/\+/g, " "));
-}
-
 test.describe("Portfolio QA Automation", () => {
   test("charge la page et les repères principaux", async ({ page }) => {
     await page.goto("/");
@@ -81,7 +77,25 @@ test.describe("Portfolio QA Automation", () => {
     await expect(page.getByTestId("contact-success")).toHaveCount(0);
   });
 
-  test("prépare un e-mail réel et propose l'appel", async ({ page }) => {
+  test("envoie le message directement par e-mail", async ({ page }) => {
+    await page.route("**/api/contact", async (route) => {
+      const body = route.request().postDataJSON() as {
+        email?: string;
+        message?: string;
+        subject?: string;
+        name?: string;
+      };
+      expect(body.email).toBe("camille.martin@example.com");
+      expect(body.name).toBe("Camille Martin");
+      expect(body.subject).toBe("mission");
+      expect(body.message).toContain("automatisation");
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: true }),
+      });
+    });
+
     await page.goto("/");
     await page.getByTestId("nav-contact").click();
 
@@ -93,24 +107,44 @@ test.describe("Portfolio QA Automation", () => {
     await page.getByTestId("contact-message").fill(
       "Bonjour, je souhaite échanger sur une mission d'automatisation Playwright.",
     );
-
     await page.getByTestId("contact-submit").click();
 
     await expect(page.getByTestId("contact-success")).toBeVisible();
+    await expect(page.getByTestId("contact-success")).toContainText("envoyé");
     await expect(page.getByTestId("contact-success")).toContainText("mohammadnosheene@gmail.com");
-    const gmailHref = decodeMailHref(await page.getByTestId("contact-gmail").getAttribute("href"));
-    expect(gmailHref).toContain("to=mohammadnosheene@gmail.com");
-    expect(gmailHref).toContain("Camille Martin");
-    expect(gmailHref).toContain("automatisation");
-    const mailtoHref = decodeMailHref(await page.getByTestId("contact-mailto").getAttribute("href"));
-    expect(mailtoHref).toContain("mailto:mohammadnosheene@gmail.com");
-    expect(mailtoHref).toContain("Camille Martin");
     await expect(page.getByTestId("contact-success-call")).toHaveAttribute("href", "tel:+33684477119");
     await expect(page.getByTestId("contact-form")).toBeHidden();
 
     await page.getByTestId("contact-reset").click();
     await expect(page.getByTestId("contact-form")).toBeVisible();
     await expect(page.getByTestId("contact-name")).toHaveValue("");
+  });
+
+  test("garde le message si l'envoi échoue", async ({ page }) => {
+    await page.route("**/api/contact", async (route) => {
+      await route.fulfill({
+        status: 502,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: false }),
+      });
+    });
+
+    await page.goto("/");
+    await page.getByTestId("contact-name").fill("Camille Martin");
+    await page.getByTestId("contact-email").fill("camille.martin@example.com");
+    await page.getByTestId("contact-subject").selectOption("echange");
+    await page.getByTestId("contact-message").fill(
+      "Bonjour, je souhaite échanger sur une mission d'automatisation Playwright.",
+    );
+    await page.getByTestId("contact-submit").click();
+
+    await expect(page.getByTestId("contact-error")).toContainText("n'a pas abouti");
+    await expect(page.getByTestId("contact-mailto")).toHaveAttribute(
+      "href",
+      /^mailto:mohammadnosheene@gmail.com\?/,
+    );
+    await expect(page.getByTestId("contact-success")).toHaveCount(0);
+    await expect(page.getByTestId("contact-message")).toHaveValue(/automatisation/);
   });
 
   test("ouvre la navigation sur un écran étroit", async ({ page }) => {

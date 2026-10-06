@@ -70,15 +70,24 @@ export function buildContactMailto(values: ContactValues, to: string): string {
   return `mailto:${draft.to}?${params.toString()}`;
 }
 
-export function buildGmailCompose(values: ContactValues, to: string): string {
-  const draft = contactDraft(values, to);
-  const url = new URL("https://mail.google.com/mail/");
-  url.searchParams.set("view", "cm");
-  url.searchParams.set("fs", "1");
-  url.searchParams.set("to", draft.to);
-  url.searchParams.set("su", draft.subject);
-  url.searchParams.set("body", draft.body);
-  return url.toString();
+export async function submitContact(values: ContactValues, company = ""): Promise<"success" | "error"> {
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ ...values, company }),
+    });
+
+    if (!response.ok) return "error";
+
+    const data = (await response.json()) as { ok?: boolean };
+    return data.ok ? "success" : "error";
+  } catch {
+    return "error";
+  }
 }
 
 export function hasContactErrors(errors: ContactErrors): boolean {

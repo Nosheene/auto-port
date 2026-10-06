@@ -25,7 +25,9 @@ Les tests de bout en bout ne doivent pas casser parce qu'un libellé a été ref
 | Contact | `contact-name`, `contact-email`, `contact-subject`, `contact-message`, `contact-submit` |
 | Retours | `contact-success`, `contact-error`, `contact-name-error` |
 
-Le formulaire prépare un vrai e-mail pour mohammadnosheene@gmail.com. Après validation, il ouvre la messagerie de la personne avec le message déjà rédigé (`mailto:`). Un lien Gmail est proposé si aucune application mail n'est installée. Le message part quand la personne confirme l'envoi, et la réponse arrive sur son adresse. Le téléphone est un lien `tel:` (`06 84 47 71 19`). Aucune clé API n'est requise, donc ça fonctionne tel quel sur Vercel.
+Le formulaire envoie un vrai e-mail à mohammadnosheene@gmail.com. `POST /api/contact` valide les champs, puis [Resend](https://resend.com) dépose le message dans cette boîte. L'adresse de la personne est en réponse, pour pouvoir lui écrire directement. Le téléphone reste un lien `tel:` (`06 84 47 71 19`).
+
+La clé `RESEND_API_KEY` est lue côté serveur. En local, placez-la dans `.env.local`. Sur Vercel : **Settings → Environment Variables**, puis **Redeploy**. Le compte Resend doit être créé avec mohammadnosheene@gmail.com. Tant que le domaine n'est pas vérifié, l'expéditeur par défaut est `Portfolio <onboarding@resend.dev>`, qui n'écrit qu'à l'adresse du compte. `RESEND_FROM` permet de le remplacer après vérification d'un domaine.
 
 ## Arborescence
 
@@ -65,7 +67,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, puis préparation de l'e-mail (Gmail, messagerie, téléphone).
+La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, envoi et échec. Les tests interceptent `/api/contact` pour ne pas envoyer de vrai e-mail.
 
 Le rapport HTML est généré dans `playwright-report/`.
 
