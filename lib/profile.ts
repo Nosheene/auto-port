@@ -13,19 +13,9 @@ export const profile = {
 
 export const practiceBadges = [
   {
-    id: "istqb",
-    testId: "badge-istqb",
-    label: "Conception ISTQB",
-  },
-  {
-    id: "playwright",
-    testId: "badge-playwright",
-    label: "Playwright",
-  },
-  {
-    id: "cypress",
-    testId: "badge-cypress",
-    label: "Cypress",
+    id: "figma",
+    testId: "badge-figma",
+    label: "Figma",
   },
   {
     id: "postman",
@@ -74,6 +64,25 @@ export const experiences = [
       "Gestion des plateformes Foromes et Chronos.",
     ],
   },
+  {
+    period: "2011 — 2016",
+    title: "Manipulatrice en électroradiologie médicale",
+    organization: "AP-HP et cliniques privées",
+    points: [
+      "Radiologie conventionnelle, scanner et traçabilité.",
+      "Aide à la réalisation de micro-biopsies mammaires, hystérosalpingographies, ponctions, arthroscopies et infiltrations.",
+      "Mammographies, radiographies et urgences polytraumatisés.",
+    ],
+  },
+  {
+    period: "2012",
+    title: "Technicienne biomédicale",
+    organization: "Stage — AP-HP La Pitié-Salpêtrière",
+    points: [
+      "Création et mise en place d’un protocole de gestion d’un échographe.",
+      "GMAO et interventions sur dispositifs médicaux (plateau d’imagerie, cardiologie, urgences).",
+    ],
+  },
 ] as const;
 
 export const trainings = [
@@ -82,4 +91,7 @@ export const trainings = [
   "UX design — 2021",
   "Concepteur de contenus digitaux de formation — Evocime, 2019",
   "Titre de formateur professionnel pour adultes — AFPA, 2017",
+  "Licence instrumentation biomédicale — Paris V, 2012",
+  "DTS IMRT — ENCPB, 2011",
+  "Médecine — 2006",
 ] as const;

@@ -1,8 +1,8 @@
 # Portfolio — Nosheene Mohammad, Développeur web fullstack
 
-Vitrine d'une pratique d'automatisation des tests : un site Next.js couvert par sa propre suite Playwright, avec des sélecteurs stables et une exécution dans GitHub Actions.
+Portfolio de Nosheene Mohammad, développeur web fullstack : projets front et back, recette et tests d'API. Le site Next.js a des sélecteurs stables et une suite de tests exécutée dans GitHub Actions.
 
-Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS). Les projets TaskChef et Restaurant viennent des dépôts publics de formation. Le badge « Conception ISTQB » désigne des techniques de conception de cas (partitions d'équivalence, valeurs limites, transitions d'état), pas un certificat nominatif.
+Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS, puis imagerie et biomédical à l’AP-HP). Les projets TaskChef et Restaurant viennent des dépôts publics.
 
 ## Stack
 

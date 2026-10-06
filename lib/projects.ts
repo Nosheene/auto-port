@@ -17,6 +17,12 @@ export type Project = {
   artifact: RoutesArtifact;
   repoUrl: string;
   demoUrl?: string;
+  image?: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
 };
 
 export const projects: Project[] = [
@@ -39,6 +45,12 @@ export const projects: Project[] = [
     ],
     repoUrl: "https://github.com/Nosheene/TaskChef",
     demoUrl: "https://taskchef.alwaysdata.net",
+    image: {
+      src: "/projects/taskchef.png",
+      alt: "Tableau de bord de TaskChef : tâches, filtre par statut et historique.",
+      width: 2560,
+      height: 1386,
+    },
     artifact: {
       kind: "routes",
       note: "Routes réelles du dépôt.",

@@ -10,8 +10,8 @@ import {
   FileCode,
   GitBranch,
   MousePointerClick,
+  PenTool,
   Send,
-  SquareStack,
   Workflow,
   type LucideIcon,
 } from "lucide-react";
@@ -35,24 +35,24 @@ export const stackCategories: StackCategory[] = [
   {
     id: "automation",
     testId: "stack-category-automation",
-    title: "Automation",
-    description: "Parcours critiques exercés dans le navigateur, de façon répétable.",
-    icon: MousePointerClick,
+    title: "Interface",
+    description: "Maquettes, pages et interactions côté navigateur.",
+    icon: PenTool,
     items: [
       {
-        name: "Playwright",
-        detail: "Suites E2E, traces, assertions sur data-testid.",
-        icon: MousePointerClick,
-      },
-      {
-        name: "Cypress",
-        detail: "Parcours métier et stabilisation des tests flaky.",
-        icon: SquareStack,
+        name: "Figma",
+        detail: "Maquettes et prototypage des interfaces.",
+        icon: PenTool,
       },
       {
         name: "JavaScript",
-        detail: "Fixtures, helpers et pages objects lisibles.",
+        detail: "Interactions, formulaires et appels fetch.",
         icon: FileCode,
+      },
+      {
+        name: "HTML & CSS",
+        detail: "Pages responsive, du formulaire au tableau de bord.",
+        icon: MousePointerClick,
       },
     ],
   },
@@ -65,7 +65,7 @@ export const stackCategories: StackCategory[] = [
     items: [
       {
         name: "GitHub Actions",
-        detail: "Workflow Playwright sur main et les pull requests.",
+        detail: "Exécution sur main et les pull requests.",
         icon: Workflow,
       },
       {
@@ -136,7 +136,6 @@ export const stackCategories: StackCategory[] = [
 ];
 
 export const adjacentTools = [
-  "Figma",
   "Draw.io",
   "Articulate Storyline 360",
   "Rise 360",

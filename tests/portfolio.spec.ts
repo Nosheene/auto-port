@@ -8,8 +8,11 @@ test.describe("Portfolio QA Automation", () => {
     await expect(page.getByTestId("hero")).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toContainText("automatisation");
     await expect(page.getByTestId("nav-main")).toBeVisible();
-    await expect(page.getByTestId("badge-istqb")).toBeVisible();
-    await expect(page.getByTestId("badge-playwright")).toBeVisible();
+    await expect(page.getByTestId("badge-figma")).toBeVisible();
+    await expect(page.getByTestId("badge-istqb")).toHaveCount(0);
+    await expect(page.getByTestId("badge-playwright")).toHaveCount(0);
+    await expect(page.getByTestId("badge-cypress")).toHaveCount(0);
+    await expect(page.getByText("Conception ISTQB")).toHaveCount(0);
     await expect(page.getByTestId("hero-suite")).toContainText("portfolio.spec.ts");
     await expect(page.getByTestId("project-card-taskchef")).toBeVisible();
     await expect(page.getByTestId("project-repo-taskchef")).toHaveAttribute(
@@ -55,6 +58,11 @@ test.describe("Portfolio QA Automation", () => {
     await page.goto("/");
 
     await expect(page.getByTestId("project-card-taskchef")).toBeVisible();
+    await expect(page.getByTestId("project-image-taskchef")).toBeVisible();
+    await expect(page.getByTestId("project-image-taskchef").locator("img")).toHaveAttribute(
+      "alt",
+      /Tableau de bord de TaskChef/,
+    );
     await expect(page.getByTestId("project-card-restaurant")).toBeVisible();
     await expect(page.getByTestId("project-artifact-taskchef")).toContainText("/tasks");
     await expect(page.getByTestId("project-artifact-restaurant")).toContainText("/api/restaurant");
@@ -105,7 +113,7 @@ test.describe("Portfolio QA Automation", () => {
     await page.getByTestId("contact-email").fill("camille.martin@example.com");
     await page.getByTestId("contact-subject").selectOption("mission");
     await page.getByTestId("contact-message").fill(
-      "Bonjour, je souhaite échanger sur une mission d'automatisation Playwright.",
+      "Bonjour, je souhaite échanger sur une mission d'automatisation des tests.",
     );
     await page.getByTestId("contact-submit").click();
 
@@ -145,7 +153,7 @@ test.describe("Portfolio QA Automation", () => {
     await page.getByTestId("contact-email").fill("camille.martin@example.com");
     await page.getByTestId("contact-subject").selectOption("mission");
     await page.getByTestId("contact-message").fill(
-      "Bonjour, je souhaite échanger sur une mission d'automatisation Playwright.",
+      "Bonjour, je souhaite échanger sur une mission d'automatisation des tests.",
     );
     await page.getByTestId("contact-submit").click();
     await expect(page).toHaveURL(/formsubmit\.co/);

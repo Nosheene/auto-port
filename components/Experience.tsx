@@ -10,12 +10,13 @@ export function Experience() {
             Le terrain réel : intégrer, recetter, expliquer.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Intégration e-learning, support LMS et recette fonctionnelle. Les projets qui mettent
-            en œuvre le front et le back sont détaillés dans la section suivante.
+            Intégration e-learning, support LMS et recette fonctionnelle, après un exercice en
+            imagerie médicale et biomédical à l’AP-HP. Les projets qui mettent en œuvre le front
+            et le back sont détaillés dans la section suivante.
           </p>
         </div>
 
-        <ol className="mt-10 grid gap-4 lg:grid-cols-3">
+        <ol className="mt-10 grid gap-4 md:grid-cols-2">
           {experiences.map((experience) => (
             <li key={experience.organization} className="rounded-2xl border border-border bg-card p-5">
               <p className="font-mono text-xs text-primary">{experience.period}</p>

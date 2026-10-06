@@ -34,22 +34,12 @@ export function Hero() {
                 <span
                   data-testid={badge.testId}
                   className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium"
-                  title={
-                    badge.id === "istqb"
-                      ? "Techniques de conception du syllabus ISTQB : partitions, valeurs limites, transitions. Ce n'est pas un certificat nominatif."
-                      : undefined
-                  }
                 >
                   {badge.label}
                 </span>
               </li>
             ))}
           </ul>
-          <p className="mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
-            « Conception ISTQB » désigne la méthode de cas (partitions, valeurs limites,
-            transitions d&apos;état), pas une certification nominative. Les diplômes sont dans le
-            parcours.
-          </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
@@ -85,7 +75,7 @@ export function Hero() {
 
         <aside
           data-testid="hero-suite"
-          aria-label="Extrait de la suite Playwright de ce portfolio"
+          aria-label="Contrôles automatiques de cette page"
           className="rounded-2xl border border-border bg-card/90 p-4 shadow-sm md:p-5"
         >
           <div className="flex items-center justify-between gap-3 border-b border-border pb-3">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 import { TestArtifact } from "@/components/projects/TestArtifact";
@@ -23,8 +24,24 @@ export function Projects() {
               <article
                 key={project.slug}
                 data-testid={`project-card-${project.slug}`}
-                className="grid gap-6 rounded-2xl border border-border bg-card p-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] md:p-6"
+                className="overflow-hidden rounded-2xl border border-border bg-card"
               >
+                {project.image ? (
+                  <figure
+                    data-testid={`project-image-${project.slug}`}
+                    className="border-b border-border bg-muted/30"
+                  >
+                    <Image
+                      src={project.image.src}
+                      alt={project.image.alt}
+                      width={project.image.width}
+                      height={project.image.height}
+                      className="h-auto w-full"
+                      sizes="(max-width: 768px) 100vw, 72rem"
+                    />
+                  </figure>
+                ) : null}
+                <div className="grid gap-6 p-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] md:p-6">
                 <div>
                   <p className="font-mono text-xs text-primary">
                     Projet {project.index} · dépôt réel
@@ -98,6 +115,7 @@ export function Projects() {
                   </dl>
                 </div>
                 <TestArtifact slug={project.slug} artifact={project.artifact} />
+                </div>
               </article>
             ))}
         </div>

@@ -10,8 +10,8 @@ export function Stack() {
             Quatre familles, un seul objectif : un signal de qualité lisible.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Automatisation, intégration continue, gestion de test et API. C&apos;est la stack avec
-            laquelle je prépare une campagne — y compris la suite qui teste ce site.
+            Interface, intégration continue, gestion de test et API. C&apos;est la stack avec
+            laquelle je construis et je recette une application.
           </p>
         </div>
 
