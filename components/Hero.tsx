@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const suite = [
   { id: "hero.charge", label: "La page d'accueil s'affiche", state: "passed" },
   { id: "theme.bascule", label: "Le mode sombre et clair bascule", state: "passed" },
-  { id: "contact.envoi", label: "Le formulaire de contact envoie un e-mail", state: "passed" },
+  { id: "contact.envoi", label: "Le formulaire de contact prépare un e-mail", state: "passed" },
 ] as const;
 
 export function Hero() {

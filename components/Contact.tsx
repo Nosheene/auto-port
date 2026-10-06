@@ -8,10 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   buildContactMailto,
+  buildGmailCompose,
   contactSubjects,
   emptyContactValues,
   hasContactErrors,
-  submitContact,
   validateContact,
   type ContactErrors,
   type ContactField,
@@ -27,8 +27,9 @@ export function Contact() {
   const formId = useId();
   const [values, setValues] = useState<ContactValues>(emptyContactValues);
   const [errors, setErrors] = useState<ContactErrors>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [mailtoHref, setMailtoHref] = useState("");
+  const [gmailHref, setGmailHref] = useState("");
   const ready = useHydrated();
 
   function updateField(field: ContactField, value: string) {
@@ -42,7 +43,7 @@ export function Contact() {
     if (status === "error") setStatus("idle");
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validateContact(values);
     setErrors(nextErrors);
@@ -52,20 +53,29 @@ export function Contact() {
       return;
     }
 
-    setStatus("submitting");
-    const result = await submitContact(values, company);
-    setStatus(result);
+    const mailto = buildContactMailto(values, profile.email);
+    const gmail = buildGmailCompose(values, profile.email);
+    setMailtoHref(mailto);
+    setGmailHref(gmail);
+    setStatus("success");
+
+    const link = document.createElement("a");
+    link.href = mailto;
+    link.rel = "noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 
   function resetForm() {
     setValues(emptyContactValues);
     setErrors({});
-    setCompany("");
+    setMailtoHref("");
+    setGmailHref("");
     setStatus("idle");
   }
 
   const validationFailed = status === "error" && hasContactErrors(errors);
-  const networkFailed = status === "error" && !hasContactErrors(errors);
 
   return (
     <section id="contact" data-testid="contact" className="scroll-mt-20">
@@ -76,8 +86,9 @@ export function Contact() {
             Un message court suffit pour démarrer.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Le formulaire envoie un e-mail sur {profile.email}. Vous pouvez aussi appeler
-            directement. Je réponds sous deux jours ouvrés.
+            Le message s&apos;ouvre dans votre messagerie, déjà adressé à {profile.email}. Il part
+            quand vous confirmez l&apos;envoi, et je peux y répondre. Sinon, Gmail ou un appel
+            direct.
           </p>
           <ul className="mt-8 space-y-3 text-sm">
             <li>
@@ -121,19 +132,36 @@ export function Contact() {
             role="status"
             className="rounded-2xl border border-primary/40 bg-card p-6"
           >
-            <p className="font-mono text-xs text-primary uppercase">Envoyé</p>
-            <h3 className="mt-3 font-heading text-2xl">Message envoyé.</h3>
+            <p className="font-mono text-xs text-primary uppercase">E-mail</p>
+            <h3 className="mt-3 font-heading text-2xl">Le message est prêt.</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Il est parti vers {profile.email}. Je vous réponds sous deux jours ouvrés. Pour
-              joindre tout de suite, appelez le {profile.phoneDisplay}.
+              Votre messagerie s&apos;ouvre avec ce texte, adressé à {profile.email}. Confirmez
+              l&apos;envoi pour qu&apos;il m&apos;arrive. Si rien ne s&apos;ouvre, utilisez Gmail, ou
+              appelez le {profile.phoneDisplay}.
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3">
+              <a
+                href={gmailHref}
+                data-testid="contact-gmail"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+              >
+                Ouvrir dans Gmail
+              </a>
+              <a
+                href={mailtoHref}
+                data-testid="contact-mailto"
+                className="inline-flex h-11 items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-medium hover:bg-muted dark:border-white/15 dark:bg-white/5"
+              >
+                Ouvrir ma messagerie
+              </a>
               <a
                 href={profile.phoneHref}
                 data-testid="contact-success-call"
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+                className="inline-flex h-11 items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-medium hover:bg-muted dark:border-white/15 dark:bg-white/5"
               >
-                Appeler
+                Appeler {profile.phoneDisplay}
               </a>
               <Button
                 type="button"
@@ -152,8 +180,8 @@ export function Contact() {
             data-hydrated={ready ? "true" : "false"}
             noValidate
             onSubmit={handleSubmit}
-            className="relative rounded-2xl border border-border bg-card p-5 md:p-6"
-            aria-describedby={validationFailed || networkFailed ? "contact-status" : undefined}
+            className="rounded-2xl border border-border bg-card p-5 md:p-6"
+            aria-describedby={validationFailed ? "contact-status" : undefined}
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
@@ -228,18 +256,6 @@ export function Contact() {
               ) : null}
             </div>
 
-            <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
-              <label htmlFor={`${formId}-company`}>Société</label>
-              <input
-                id={`${formId}-company`}
-                name="company"
-                tabIndex={-1}
-                autoComplete="off"
-                value={company}
-                onChange={(event) => setCompany(event.target.value)}
-              />
-            </div>
-
             <div className="mt-4 grid gap-2">
               <Label htmlFor={`${formId}-message`}>Message</Label>
               <Textarea
@@ -270,31 +286,14 @@ export function Contact() {
               </p>
             ) : null}
 
-            {networkFailed ? (
-              <div id="contact-status" data-testid="contact-error" role="alert" className="mt-4 space-y-2">
-                <p className="text-sm text-fail">
-                  L&apos;envoi n&apos;a pas abouti. Le message est resté dans le formulaire : réessayez,
-                  ou envoyez-le depuis votre messagerie.
-                </p>
-                <a
-                  href={buildContactMailto(values, profile.email)}
-                  data-testid="contact-mailto-fallback"
-                  className="inline-flex text-sm text-primary underline decoration-primary/40 underline-offset-4"
-                >
-                  Envoyer depuis ma messagerie
-                </a>
-              </div>
-            ) : null}
-
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Button
                 type="submit"
                 data-testid="contact-submit"
                 className="h-11 px-5"
-                disabled={!ready || status === "submitting"}
-                aria-busy={status === "submitting"}
+                disabled={!ready}
               >
-                {status === "submitting" ? "Envoi…" : "Envoyer le message"}
+                Envoyer le message
               </Button>
               <a
                 href={profile.phoneHref}

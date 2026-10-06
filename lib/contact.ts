@@ -58,36 +58,29 @@ export function contactSubjectLabel(value: string): string {
   return contactSubjects.find((subject) => subject.value === value)?.label ?? value;
 }
 
-export function buildContactMailto(values: ContactValues, to: string): string {
+export function contactDraft(values: ContactValues, to: string) {
   const subject = `Portfolio — ${contactSubjectLabel(values.subject)} — ${values.name.trim()}`;
   const body = `${values.message.trim()}\n\n— ${values.name.trim()}\n${values.email.trim()}`;
-  const params = new URLSearchParams({ subject, body });
-  return `mailto:${to}?${params.toString()}`;
+  return { to, subject, body };
+}
+
+export function buildContactMailto(values: ContactValues, to: string): string {
+  const draft = contactDraft(values, to);
+  const params = new URLSearchParams({ subject: draft.subject, body: draft.body });
+  return `mailto:${draft.to}?${params.toString()}`;
+}
+
+export function buildGmailCompose(values: ContactValues, to: string): string {
+  const draft = contactDraft(values, to);
+  const url = new URL("https://mail.google.com/mail/");
+  url.searchParams.set("view", "cm");
+  url.searchParams.set("fs", "1");
+  url.searchParams.set("to", draft.to);
+  url.searchParams.set("su", draft.subject);
+  url.searchParams.set("body", draft.body);
+  return url.toString();
 }
 
 export function hasContactErrors(errors: ContactErrors): boolean {
   return Object.keys(errors).length > 0;
-}
-
-export async function submitContact(
-  values: ContactValues,
-  company = "",
-): Promise<"success" | "error"> {
-  try {
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ ...values, company }),
-    });
-
-    if (!response.ok) return "error";
-
-    const data = (await response.json()) as { ok?: boolean };
-    return data.ok ? "success" : "error";
-  } catch {
-    return "error";
-  }
 }

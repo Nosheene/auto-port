@@ -25,7 +25,7 @@ Les tests de bout en bout ne doivent pas casser parce qu'un libellé a été ref
 | Contact | `contact-name`, `contact-email`, `contact-subject`, `contact-message`, `contact-submit` |
 | Retours | `contact-success`, `contact-error`, `contact-name-error` |
 
-Le formulaire envoie un vrai e-mail. `POST /api/contact` valide les champs, puis transmet le message à [FormSubmit](https://formsubmit.co/), qui le dépose sur mohammadnosheene@gmail.com. Aucune clé API n'est nécessaire. Au premier envoi, FormSubmit demande une confirmation dans cette boîte : le lien n'est à ouvrir qu'une fois. Le téléphone reste un lien `tel:` (`06 84 47 71 19`). Si l'envoi automatique échoue, le formulaire propose un `mailto:` déjà rempli.
+Le formulaire prépare un vrai e-mail pour mohammadnosheene@gmail.com. Après validation, il ouvre la messagerie de la personne avec le message déjà rédigé (`mailto:`). Un lien Gmail est proposé si aucune application mail n'est installée. Le message part quand la personne confirme l'envoi, et la réponse arrive sur son adresse. Le téléphone est un lien `tel:` (`06 84 47 71 19`). Aucune clé API n'est requise, donc ça fonctionne tel quel sur Vercel.
 
 ## Arborescence
 
@@ -65,7 +65,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, envoi et échec. Les tests interceptent `/api/contact` pour ne pas envoyer de vrai e-mail.
+La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, puis préparation de l'e-mail (Gmail, messagerie, téléphone).
 
 Le rapport HTML est généré dans `playwright-report/`.
 
