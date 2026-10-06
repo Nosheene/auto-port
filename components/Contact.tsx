@@ -161,7 +161,7 @@ export function Contact() {
                 data-testid="contact-success-call"
                 className="inline-flex h-11 items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-medium hover:bg-muted dark:border-white/15 dark:bg-white/5"
               >
-                Appeler {profile.phoneDisplay}
+                Appeler
               </a>
               <Button
                 type="button"
@@ -300,7 +300,7 @@ export function Contact() {
                 data-testid="contact-call"
                 className="inline-flex h-11 items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-medium hover:bg-muted dark:border-white/15 dark:bg-white/5"
               >
-                Appeler {profile.phoneDisplay}
+                Appeler
               </a>
             </div>
           </form>
