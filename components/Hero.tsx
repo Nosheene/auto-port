@@ -25,8 +25,7 @@ export function Hero() {
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Je suis {profile.name.split(" ")[0]}, développeuse full-stack avec une pratique
             concrète de la recette, des tests d&apos;API et de l&apos;analyse d&apos;anomalies. Je
-            conçois des filets de test pour que les mises en production restent calmes. Ce
-            portfolio est couvert par sa propre suite Playwright.
+            conçois des tests qui sécurisent les mises en production.
           </p>
 
           <ul className="mt-8 flex flex-wrap gap-2" aria-label="Repères de pratique">

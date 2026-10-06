@@ -1,4 +1,4 @@
-# Portfolio — Nosheene Mohammad, développeur web fullstack
+# Portfolio — Nosheene Mohammad, Développeur web fullstack
 
 Vitrine d'une pratique d'automatisation des tests : un site Next.js couvert par sa propre suite Playwright, avec des sélecteurs stables et une exécution dans GitHub Actions.
 
