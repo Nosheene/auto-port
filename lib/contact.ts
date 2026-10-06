@@ -90,45 +90,34 @@ export async function submitContact(values: ContactValues, company = ""): Promis
   }
 }
 
-async function submitWithFormSubmit(values: ContactValues, to: string): Promise<"success" | "error"> {
+export function postContactForm(values: ContactValues, to: string, nextUrl: string) {
   const draft = contactDraft(values, to);
-  try {
-    const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        name: values.name.trim(),
-        email: values.email.trim(),
-        _replyto: values.email.trim(),
-        _subject: draft.subject,
-        _captcha: "false",
-        _template: "table",
-        message: draft.body,
-      }),
-    });
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `https://formsubmit.co/${to}`;
+  form.acceptCharset = "UTF-8";
 
-    if (!response.ok) return "error";
+  const fields: Record<string, string> = {
+    name: values.name.trim(),
+    email: values.email.trim(),
+    _replyto: values.email.trim(),
+    _subject: draft.subject,
+    _captcha: "false",
+    _template: "table",
+    _next: nextUrl,
+    message: draft.body,
+  };
 
-    const data = (await response.json()) as { success?: string | boolean };
-    return data.success === true || data.success === "true" ? "success" : "error";
-  } catch {
-    return "error";
+  for (const [name, value] of Object.entries(fields)) {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+    form.append(input);
   }
-}
 
-export async function deliverContact(
-  values: ContactValues,
-  to: string,
-  company = "",
-): Promise<"success" | "error"> {
-  if (company.trim() !== "") return "success";
-
-  if ((await submitContact(values, company)) === "success") return "success";
-
-  return submitWithFormSubmit(values, to);
+  document.body.append(form);
+  form.submit();
 }
 
 export function hasContactErrors(errors: ContactErrors): boolean {

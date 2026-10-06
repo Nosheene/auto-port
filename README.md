@@ -25,7 +25,7 @@ Les tests de bout en bout ne doivent pas casser parce qu'un libellé a été ref
 | Contact | `contact-name`, `contact-email`, `contact-subject`, `contact-message`, `contact-submit` |
 | Retours | `contact-success`, `contact-error`, `contact-name-error` |
 
-Le formulaire envoie un vrai e-mail à mohammadnosheene@gmail.com. Si `RESEND_API_KEY` est absente, le navigateur transmet le message à [FormSubmit](https://formsubmit.co/). Le premier envoi demande une confirmation dans cette boîte Gmail : le lien n'est à ouvrir qu'une fois. Les suivants arrivent directement. Le téléphone reste un lien `tel:` (`06 84 47 71 19`).
+Le formulaire envoie un vrai e-mail à mohammadnosheene@gmail.com. Si Resend refuse l'envoi, la page transmet le formulaire à [FormSubmit](https://formsubmit.co/). Le premier message demande une confirmation dans Gmail : le lien n'est à ouvrir qu'une fois. Le téléphone reste un lien `tel:` (`06 84 47 71 19`).
 
 ## Arborescence
 

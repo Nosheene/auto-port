@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useId, useState, useSyncExternalStore, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,9 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   buildContactMailto,
   contactSubjects,
-  deliverContact,
   emptyContactValues,
   hasContactErrors,
+  postContactForm,
+  submitContact,
   validateContact,
   type ContactErrors,
   type ContactField,
@@ -28,8 +29,12 @@ export function Contact() {
   const [values, setValues] = useState<ContactValues>(emptyContactValues);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [company, setCompany] = useState("");
   const ready = useHydrated();
+  const sentByRedirect = useSyncExternalStore(
+    () => () => {},
+    () => new URLSearchParams(window.location.search).get("envoye") === "1",
+    () => false,
+  );
 
   function updateField(field: ContactField, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -53,14 +58,18 @@ export function Contact() {
     }
 
     setStatus("submitting");
-    const result = await deliverContact(values, profile.email, company);
-    setStatus(result);
+    const result = await submitContact(values);
+    if (result === "success") {
+      setStatus("success");
+      return;
+    }
+
+    postContactForm(values, profile.email, `${window.location.origin}/?envoye=1`);
   }
 
   function resetForm() {
     setValues(emptyContactValues);
     setErrors({});
-    setCompany("");
     setStatus("idle");
   }
 
@@ -115,7 +124,7 @@ export function Contact() {
           </ul>
         </div>
 
-        {status === "success" ? (
+        {status === "success" || sentByRedirect ? (
           <div
             data-testid="contact-success"
             role="status"
@@ -250,18 +259,6 @@ export function Contact() {
                   {errors.message}
                 </p>
               ) : null}
-            </div>
-
-            <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
-              <label htmlFor={`${formId}-company`}>Société</label>
-              <input
-                id={`${formId}-company`}
-                name="company"
-                tabIndex={-1}
-                autoComplete="off"
-                value={company}
-                onChange={(event) => setCompany(event.target.value)}
-              />
             </div>
 
             {validationFailed ? (
