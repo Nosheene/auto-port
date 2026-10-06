@@ -58,7 +58,7 @@ export function Hero() {
               data-testid="cta-projects"
               className={cn(buttonVariants({ size: "lg" }), "h-11 w-full px-5 sm:w-auto")}
             >
-              Voir les études de cas
+              Voir les projets
             </a>
             <a
               href="#contact"

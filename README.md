@@ -2,7 +2,7 @@
 
 Vitrine d'une pratique d'automatisation des tests : un site Next.js couvert par sa propre suite Playwright, avec des sélecteurs stables et une exécution dans GitHub Actions.
 
-Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS). Les trois études de cas sont des **scénarios fictifs et anonymisés**. Le badge « Conception ISTQB » désigne des techniques de conception de cas (partitions d'équivalence, valeurs limites, transitions d'état), pas un certificat nominatif.
+Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS). Les projets TaskChef et Restaurant viennent des dépôts publics de formation. Le badge « Conception ISTQB » désigne des techniques de conception de cas (partitions d'équivalence, valeurs limites, transitions d'état), pas un certificat nominatif.
 
 ## Stack
 
@@ -21,7 +21,7 @@ Les tests de bout en bout ne doivent pas casser parce qu'un libellé a été ref
 | --- | --- |
 | Navigation | `nav-home`, `nav-stack`, `nav-projects`, `nav-contact`, `nav-menu-toggle` |
 | Actions | `cta-projects`, `cta-contact`, `cta-linkedin`, `theme-toggle` |
-| Projets | `filter-playwright`, `project-card-fintech-scaleup` |
+| Projets | `project-card-taskchef`, `project-repo-taskchef`, `project-card-restaurant` |
 | Contact | `contact-name`, `contact-email`, `contact-subject`, `contact-message`, `contact-submit` |
 | Retours | `contact-success`, `contact-error`, `contact-name-error` |
 
@@ -65,7 +65,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, filtres des études de cas, validation du formulaire, envoi simulé et échec simulé.
+La commande démarre le site si besoin, puis joue `tests/portfolio.spec.ts` : chargement, bascule de thème, projets réels, validation du formulaire, envoi simulé et échec simulé.
 
 Le rapport HTML est généré dans `playwright-report/`.
 

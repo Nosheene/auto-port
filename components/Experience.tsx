@@ -10,8 +10,8 @@ export function Experience() {
             Le terrain réel : intégrer, recetter, expliquer.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Intégration e-learning, support LMS et recette fonctionnelle. Les trois études de cas
-            de la section suivante sont des scénarios fictifs, séparés de ce parcours.
+            Intégration e-learning, support LMS et recette fonctionnelle. Les projets de formation
+            sont détaillés dans la section suivante.
           </p>
         </div>
 

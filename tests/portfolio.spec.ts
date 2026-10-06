@@ -25,7 +25,7 @@ test.describe("Portfolio QA Automation", () => {
       "href",
       "https://github.com/Nosheene/Restaurant",
     );
-    await expect(page.getByTestId("project-card-fintech-scaleup")).toBeVisible();
+    await expect(page.getByTestId("project-card-fintech-scaleup")).toHaveCount(0);
   });
 
   test("bascule le thème sombre et clair", async ({ page }) => {
@@ -45,21 +45,16 @@ test.describe("Portfolio QA Automation", () => {
     await expect(toggle).toHaveAttribute("aria-pressed", "true");
   });
 
-  test("filtre les études de cas", async ({ page }) => {
+  test("affiche les deux projets de formation", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByTestId("filter-cypress").click();
-    await expect(page.getByTestId("project-card-ecommerce-saas")).toBeVisible();
-    await expect(page.getByTestId("project-card-fintech-scaleup")).toBeHidden();
-    await expect(page.getByTestId("project-card-medtech-mobile")).toBeHidden();
-    await expect(page.getByTestId("project-card-taskchef")).toBeHidden();
-    await expect(page.getByTestId("project-card-restaurant")).toBeHidden();
-    await expect(page.getByTestId("project-artifact-ecommerce-saas")).toContainText("BUG-1842");
-
-    await page.getByTestId("filter-all").click();
-    await expect(page.getByTestId("project-card-fintech-scaleup")).toBeVisible();
-    await expect(page.getByTestId("project-card-fintech-scaleup")).toContainText("-50 %");
-    await expect(page.getByTestId("project-artifact-medtech-mobile")).toContainText("95 %");
+    await expect(page.getByTestId("project-card-taskchef")).toBeVisible();
+    await expect(page.getByTestId("project-card-restaurant")).toBeVisible();
+    await expect(page.getByTestId("project-artifact-taskchef")).toContainText("/tasks");
+    await expect(page.getByTestId("project-artifact-restaurant")).toContainText("/api/restaurant");
+    await expect(page.getByTestId("project-card-fintech-scaleup")).toHaveCount(0);
+    await expect(page.getByTestId("project-card-ecommerce-saas")).toHaveCount(0);
+    await expect(page.getByTestId("project-card-medtech-mobile")).toHaveCount(0);
   });
 
   test("signale les champs invalides du formulaire", async ({ page }) => {

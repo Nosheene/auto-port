@@ -1,69 +1,25 @@
-"use client";
-
 import { ArrowUpRight } from "lucide-react";
-import { useMemo, useState } from "react";
 
 import { TestArtifact } from "@/components/projects/TestArtifact";
-import { filterProjects, projectFilters, type ProjectFilter } from "@/lib/projects";
+import { projects } from "@/lib/projects";
 
 export function Projects() {
-  const [filter, setFilter] = useState<ProjectFilter>("all");
-  const visible = useMemo(() => filterProjects(filter), [filter]);
-
   return (
     <section id="projets" data-testid="projects" className="scroll-mt-20 border-b border-border">
       <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">
-            Études de cas
-          </p>
+          <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">Projets</p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight md:text-4xl">
-            TaskChef et Restaurant, deux projets réels, puis trois contextes fictifs.
+            TaskChef et Restaurant, deux projets de formation.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            TaskChef et Restaurant viennent des dépôts de formation. Les trois études suivantes
-            restent des scénarios anonymisés : secteurs, outils et chiffres y sont fictifs.
+            Les deux cartes reprennent les dépôts publics : ce que fait l’application, la stack, et
+            le lien vers le code.
           </p>
         </div>
 
-        <div
-          className="mt-8 flex flex-wrap gap-2"
-          role="group"
-          aria-label="Filtrer les études de cas"
-        >
-          {projectFilters.map((item) => {
-            const selected = filter === item.id;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                data-testid={item.testId}
-                aria-pressed={selected}
-                onClick={() => setFilter(item.id)}
-                className={`h-9 rounded-full border px-4 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${
-                  selected
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-card text-foreground hover:bg-muted"
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </div>
-
-        <p className="sr-only" aria-live="polite">
-          {visible.length} étude{visible.length > 1 ? "s" : ""} affichée
-          {visible.length > 1 ? "s" : ""}.
-        </p>
-
-        {visible.length === 0 ? (
-          <p data-testid="projects-empty" className="mt-8 text-sm text-muted-foreground">
-            Aucune étude ne correspond à ce filtre.
-          </p>
-        ) : (
-          <div data-testid="projects-list" className="mt-8 grid gap-5">
-            {visible.map((project) => (
+        <div data-testid="projects-list" className="mt-8 grid gap-5">
+            {projects.map((project) => (
               <article
                 key={project.slug}
                 data-testid={`project-card-${project.slug}`}
@@ -71,9 +27,7 @@ export function Projects() {
               >
                 <div>
                   <p className="font-mono text-xs text-primary">
-                    {project.fictional
-                      ? `Étude ${project.index} · scénario fictif`
-                      : `Projet ${project.index} · dépôt réel`}
+                    Projet {project.index} · dépôt réel
                   </p>
                   <h3 className="mt-2 font-heading text-2xl tracking-tight md:text-3xl">
                     {project.title}
@@ -146,8 +100,7 @@ export function Projects() {
                 <TestArtifact slug={project.slug} artifact={project.artifact} />
               </article>
             ))}
-          </div>
-        )}
+        </div>
       </div>
     </section>
   );
