@@ -98,6 +98,37 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "restaurant",
+    index: "02",
+    title: "Restaurant",
+    sector: "Projet de formation · API Symfony",
+    summary:
+      "API REST pour gérer un restaurant et les comptes utilisateurs : création, lecture, modification et suppression.",
+    context:
+      "Fil rouge de la formation Développeur backend Studi. Les données sont des entités Doctrine : restaurant, utilisateur et photo. L’authentification se fait par jeton, documentée avec Swagger.",
+    approach:
+      "Contrôleurs Symfony pour l’inscription, la connexion et le profil. Collection Postman pour les routes, tests PHPUnit, et configuration de déploiement Upsun. Le code du dépôt est public.",
+    tools: ["PHP", "Symfony", "MySQL", "Doctrine", "Postman", "PHPUnit"],
+    filters: ["api"],
+    metrics: [
+      { value: "REST", label: "API Symfony" },
+      { value: "Token", label: "authentification par jeton" },
+      { value: "Swagger", label: "documentation OpenAPI" },
+    ],
+    fictional: false,
+    repoUrl: "https://github.com/Nosheene/Restaurant",
+    artifact: {
+      kind: "routes",
+      note: "Routes présentes dans le dépôt. L’adresse de production Upsun répond actuellement en erreur 502.",
+      routes: [
+        { method: "POST", path: "/api/registration", detail: "Inscription" },
+        { method: "POST", path: "/api/login", detail: "Connexion, jeton d’API" },
+        { method: "GET", path: "/api/account/me", detail: "Profil authentifié" },
+        { method: "POST", path: "/api/restaurant", detail: "Créer un restaurant" },
+      ],
+    },
+  },
+  {
     slug: "fintech-scaleup",
     fictional: true,
     index: "01",

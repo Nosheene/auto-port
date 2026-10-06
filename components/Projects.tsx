@@ -18,12 +18,11 @@ export function Projects() {
             Études de cas
           </p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight md:text-4xl">
-            TaskChef, un projet réel, puis trois contextes fictifs.
+            TaskChef et Restaurant, deux projets réels, puis trois contextes fictifs.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            TaskChef est un projet de formation, avec le code et le site en ligne. Les trois
-            études suivantes restent des scénarios anonymisés : secteurs, outils et chiffres y
-            sont fictifs.
+            TaskChef et Restaurant viennent des dépôts de formation. Les trois études suivantes
+            restent des scénarios anonymisés : secteurs, outils et chiffres y sont fictifs.
           </p>
         </div>
 

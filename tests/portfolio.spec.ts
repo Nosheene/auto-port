@@ -20,6 +20,11 @@ test.describe("Portfolio QA Automation", () => {
       "href",
       "https://taskchef.alwaysdata.net",
     );
+    await expect(page.getByTestId("project-card-restaurant")).toBeVisible();
+    await expect(page.getByTestId("project-repo-restaurant")).toHaveAttribute(
+      "href",
+      "https://github.com/Nosheene/Restaurant",
+    );
     await expect(page.getByTestId("project-card-fintech-scaleup")).toBeVisible();
   });
 
@@ -48,6 +53,7 @@ test.describe("Portfolio QA Automation", () => {
     await expect(page.getByTestId("project-card-fintech-scaleup")).toBeHidden();
     await expect(page.getByTestId("project-card-medtech-mobile")).toBeHidden();
     await expect(page.getByTestId("project-card-taskchef")).toBeHidden();
+    await expect(page.getByTestId("project-card-restaurant")).toBeHidden();
     await expect(page.getByTestId("project-artifact-ecommerce-saas")).toContainText("BUG-1842");
 
     await page.getByTestId("filter-all").click();
