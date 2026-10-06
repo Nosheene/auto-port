@@ -9,9 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   buildContactMailto,
   contactSubjects,
+  deliverContact,
   emptyContactValues,
   hasContactErrors,
-  submitContact,
   validateContact,
   type ContactErrors,
   type ContactField,
@@ -53,7 +53,7 @@ export function Contact() {
     }
 
     setStatus("submitting");
-    const result = await submitContact(values, company);
+    const result = await deliverContact(values, profile.email, company);
     setStatus(result);
   }
 

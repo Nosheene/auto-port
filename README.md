@@ -25,9 +25,7 @@ Les tests de bout en bout ne doivent pas casser parce qu'un libellé a été ref
 | Contact | `contact-name`, `contact-email`, `contact-subject`, `contact-message`, `contact-submit` |
 | Retours | `contact-success`, `contact-error`, `contact-name-error` |
 
-Le formulaire envoie un vrai e-mail à mohammadnosheene@gmail.com. `POST /api/contact` valide les champs, puis [Resend](https://resend.com) dépose le message dans cette boîte. L'adresse de la personne est en réponse, pour pouvoir lui écrire directement. Le téléphone reste un lien `tel:` (`06 84 47 71 19`).
-
-La clé `RESEND_API_KEY` est lue côté serveur. En local, placez-la dans `.env.local`. Sur Vercel : **Settings → Environment Variables**, puis **Redeploy**. Le compte Resend doit être créé avec mohammadnosheene@gmail.com. Tant que le domaine n'est pas vérifié, l'expéditeur par défaut est `Portfolio <onboarding@resend.dev>`, qui n'écrit qu'à l'adresse du compte. `RESEND_FROM` permet de le remplacer après vérification d'un domaine.
+Le formulaire envoie un vrai e-mail à mohammadnosheene@gmail.com. Si `RESEND_API_KEY` est absente, le navigateur transmet le message à [FormSubmit](https://formsubmit.co/). Le premier envoi demande une confirmation dans cette boîte Gmail : le lien n'est à ouvrir qu'une fois. Les suivants arrivent directement. Le téléphone reste un lien `tel:` (`06 84 47 71 19`).
 
 ## Arborescence
 

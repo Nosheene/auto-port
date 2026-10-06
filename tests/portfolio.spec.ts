@@ -120,12 +120,51 @@ test.describe("Portfolio QA Automation", () => {
     await expect(page.getByTestId("contact-name")).toHaveValue("");
   });
 
+  test("envoie le message même sans clé Resend", async ({ page }) => {
+    await page.route("**/api/contact", async (route) => {
+      await route.fulfill({
+        status: 503,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: false, error: "missing-key" }),
+      });
+    });
+    await page.route("https://formsubmit.co/ajax/**", async (route) => {
+      const body = route.request().postDataJSON() as { email?: string; message?: string };
+      expect(body.email).toBe("camille.martin@example.com");
+      expect(body.message).toContain("automatisation");
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ success: "true" }),
+      });
+    });
+
+    await page.goto("/");
+    await page.getByTestId("contact-name").fill("Camille Martin");
+    await page.getByTestId("contact-email").fill("camille.martin@example.com");
+    await page.getByTestId("contact-subject").selectOption("mission");
+    await page.getByTestId("contact-message").fill(
+      "Bonjour, je souhaite échanger sur une mission d'automatisation Playwright.",
+    );
+    await page.getByTestId("contact-submit").click();
+
+    await expect(page.getByTestId("contact-success")).toBeVisible();
+    await expect(page.getByTestId("contact-success")).toContainText("mohammadnosheene@gmail.com");
+  });
+
   test("garde le message si l'envoi échoue", async ({ page }) => {
     await page.route("**/api/contact", async (route) => {
       await route.fulfill({
         status: 502,
         contentType: "application/json",
         body: JSON.stringify({ ok: false }),
+      });
+    });
+    await page.route("https://formsubmit.co/**", async (route) => {
+      await route.fulfill({
+        status: 502,
+        contentType: "application/json",
+        body: JSON.stringify({ success: "false" }),
       });
     });
 
