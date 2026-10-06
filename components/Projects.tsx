@@ -10,7 +10,7 @@ export function Projects() {
         <div className="max-w-2xl">
           <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">Projets</p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight md:text-4xl">
-            TaskChef et Restaurant, deux projets de formation.
+            TaskChef et Restaurant, 2 projets qui mettent en œuvre mes compétences front et back.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
             Les deux cartes reprennent les dépôts publics : ce que fait l’application, la stack, et
