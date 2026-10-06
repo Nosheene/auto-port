@@ -1,6 +1,6 @@
 export const profile = {
   name: "Nosheene Mohammad",
-  role: "QA Automation Engineer",
+  role: "développeur web fullstack",
   location: "Ozoir-la-Ferrière",
   region: "Île-de-France",
   english: "Anglais B2",

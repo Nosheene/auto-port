@@ -1,5 +1,5 @@
 export const contactSubjects = [
-  { value: "mission", label: "Mission QA / automatisation" },
+  { value: "mission", label: "Mission fullstack" },
   { value: "echange", label: "Échange technique" },
   { value: "autre", label: "Autre" },
 ] as const;

@@ -1,4 +1,4 @@
-# Portfolio QA Automation — Nosheene Mohammad
+# Portfolio — Nosheene Mohammad, développeur web fullstack
 
 Vitrine d'une pratique d'automatisation des tests : un site Next.js couvert par sa propre suite Playwright, avec des sélecteurs stables et une exécution dans GitHub Actions.
 

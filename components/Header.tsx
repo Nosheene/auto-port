@@ -30,7 +30,7 @@ export function Header() {
           </span>
           <span className="leading-tight">
             <span className="block text-sm font-medium">{profile.name}</span>
-            <span className="block text-xs text-muted-foreground">QA Automation</span>
+            <span className="block text-xs text-muted-foreground">{profile.role}</span>
           </span>
         </a>
 

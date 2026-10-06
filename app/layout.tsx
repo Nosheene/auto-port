@@ -22,9 +22,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${profile.name} — QA Automation Engineer`,
+  title: `${profile.name} — ${profile.role}`,
   description:
-    "Portfolio de Nosheene Mohammad, QA Automation Engineer. Recette, tests d'API et automatisation Playwright, avec une suite de tests sur le site lui-même.",
+    "Portfolio de Nosheene Mohammad, développeur web fullstack. Projets front et back, recette et tests d'API.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
