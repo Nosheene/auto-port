@@ -54,11 +54,11 @@ export const projects: Project[] = [
     slug: "restaurant",
     index: "02",
     title: "Restaurant",
-    sector: "Projet de formation · API Symfony",
+    sector: "Projet · API Symfony",
     summary:
       "API REST pour gérer un restaurant et les comptes utilisateurs : création, lecture, modification et suppression.",
     context:
-      "Fil rouge de la formation Développeur backend Studi. Les données sont des entités Doctrine : restaurant, utilisateur et photo. L’authentification se fait par jeton, documentée avec Swagger.",
+      "Les données sont des entités Doctrine : restaurant, utilisateur et photo. L’authentification se fait par jeton, documentée avec Swagger.",
     approach:
       "Contrôleurs Symfony pour l’inscription, la connexion et le profil. Collection Postman pour les routes, tests PHPUnit, et configuration de déploiement Upsun. Le code du dépôt est public.",
     tools: ["PHP", "Symfony", "MySQL", "Doctrine", "Postman", "PHPUnit"],
