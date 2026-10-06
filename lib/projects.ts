@@ -39,7 +39,13 @@ export type CoverageArtifact = {
   note: string;
 };
 
-export type ProjectArtifact = RunArtifact | BugArtifact | CoverageArtifact;
+export type RoutesArtifact = {
+  kind: "routes";
+  note: string;
+  routes: { method: string; path: string; detail: string }[];
+};
+
+export type ProjectArtifact = RunArtifact | BugArtifact | CoverageArtifact | RoutesArtifact;
 
 export type Project = {
   slug: string;
@@ -53,11 +59,47 @@ export type Project = {
   filters: Exclude<ProjectFilter, "all">[];
   metrics: { value: string; label: string }[];
   artifact: ProjectArtifact;
+  fictional: boolean;
+  repoUrl?: string;
+  demoUrl?: string;
 };
 
 export const projects: Project[] = [
   {
+    slug: "taskchef",
+    index: "01",
+    title: "TaskChef",
+    sector: "Projet de formation · gestion de tâches",
+    summary:
+      "Application web pour créer, modifier, supprimer et suivre ses tâches, avec authentification et historique des actions.",
+    context:
+      "Projet réalisé par Nosheene Mohammad. Le front est une interface HTML, CSS et JavaScript. L’API REST est en Node.js et Express. Les comptes et les tâches sont dans MySQL, l’historique dans MongoDB.",
+    approach:
+      "Authentification JWT avec les rôles utilisateur et administrateur, CRUD des tâches, filtre par statut, et collection Postman pour tester l’API. L’environnement local se lance avec Docker Compose. Le front est en ligne sur Alwaysdata, l’API sur Render, MongoDB sur Atlas.",
+    tools: ["JavaScript", "Node.js", "Express", "MySQL", "MongoDB", "Docker", "Postman"],
+    filters: ["api"],
+    metrics: [
+      { value: "JWT", label: "authentification" },
+      { value: "2", label: "bases de données" },
+      { value: "REST", label: "API testée dans Postman" },
+    ],
+    fictional: false,
+    repoUrl: "https://github.com/Nosheene/TaskChef",
+    demoUrl: "https://taskchef.alwaysdata.net",
+    artifact: {
+      kind: "routes",
+      note: "Routes réelles du dépôt, pas un jeu de données fictif.",
+      routes: [
+        { method: "POST", path: "/auth/login", detail: "Connexion, jeton JWT" },
+        { method: "GET", path: "/tasks", detail: "Liste des tâches" },
+        { method: "POST", path: "/tasks", detail: "Création d’une tâche" },
+        { method: "GET", path: "/activity-logs", detail: "Historique MongoDB" },
+      ],
+    },
+  },
+  {
     slug: "fintech-scaleup",
+    fictional: true,
     index: "01",
     title: "Scale-up FinTech",
     sector: "Souscription de crédit",
@@ -92,6 +134,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ecommerce-saas",
+    fictional: true,
     index: "02",
     title: "Plateforme e-commerce SaaS",
     sector: "Tunnel d'achat",
@@ -126,6 +169,7 @@ export const projects: Project[] = [
   },
   {
     slug: "medtech-mobile",
+    fictional: true,
     index: "03",
     title: "App mobile MedTech",
     sector: "Suivi patient",

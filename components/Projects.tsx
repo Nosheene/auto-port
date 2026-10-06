@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { TestArtifact } from "@/components/projects/TestArtifact";
@@ -17,12 +18,12 @@ export function Projects() {
             Études de cas
           </p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight md:text-4xl">
-            Trois contextes anonymisés, pour montrer la démarche.
+            TaskChef, un projet réel, puis trois contextes fictifs.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Secteurs, outils et chiffres sont fictifs. Ils illustrent une campagne
-            d&apos;automatisation : contexte, outillage, résultat, et un rapport lisible à la place
-            d&apos;une capture confidentielle.
+            TaskChef est un projet de formation, avec le code et le site en ligne. Les trois
+            études suivantes restent des scénarios anonymisés : secteurs, outils et chiffres y
+            sont fictifs.
           </p>
         </div>
 
@@ -71,7 +72,9 @@ export function Projects() {
               >
                 <div>
                   <p className="font-mono text-xs text-primary">
-                    Étude {project.index} · scénario fictif
+                    {project.fictional
+                      ? `Étude ${project.index} · scénario fictif`
+                      : `Projet ${project.index} · dépôt réel`}
                   </p>
                   <h3 className="mt-2 font-heading text-2xl tracking-tight md:text-3xl">
                     {project.title}
@@ -100,6 +103,34 @@ export function Projects() {
                       </li>
                     ))}
                   </ul>
+                  {project.repoUrl || project.demoUrl ? (
+                    <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                      {project.repoUrl ? (
+                        <a
+                          href={project.repoUrl}
+                          data-testid={`project-repo-${project.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-medium text-primary underline-offset-4 hover:underline"
+                        >
+                          Code sur GitHub
+                          <ArrowUpRight className="size-4" aria-hidden />
+                        </a>
+                      ) : null}
+                      {project.demoUrl ? (
+                        <a
+                          href={project.demoUrl}
+                          data-testid={`project-demo-${project.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-medium text-primary underline-offset-4 hover:underline"
+                        >
+                          Site en ligne
+                          <ArrowUpRight className="size-4" aria-hidden />
+                        </a>
+                      ) : null}
+                    </div>
+                  ) : null}
                   <dl className="mt-5 grid grid-cols-3 gap-3">
                     {project.metrics.map((metric) => (
                       <div key={metric.label}>
