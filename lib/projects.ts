@@ -14,9 +14,14 @@ export type Project = {
   approach: string;
   tools: string[];
   metrics: { value: string; label: string }[];
-  artifact: RoutesArtifact;
-  repoUrl: string;
+  artifact?: RoutesArtifact;
+  repoUrl?: string;
   demoUrl?: string;
+  demoCta?: {
+    href: string;
+    label: string;
+  };
+  sourceLabel?: string;
   image?: {
     src: string;
     alt: string;
@@ -27,8 +32,36 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "taskchef",
+    slug: "releve",
     index: "01",
+    title: "Relève",
+    sector: "Projet · comptes rendus pour artisans",
+    summary:
+      "Comptes rendus avant/après pour artisans. Photos, signature du client et brouillon à partir des images.",
+    context:
+      "L’application prépare le compte rendu d’une intervention à partir des photos du chantier, de la signature du client et d’un brouillon issu des images.",
+    approach: "Il n’y a pas d’adresse publique. La démonstration se fait sur demande.",
+    tools: ["Next.js", "TypeScript"],
+    sourceLabel: "application",
+    metrics: [
+      { value: "Photos", label: "avant et après" },
+      { value: "Signature", label: "du client" },
+      { value: "Brouillon", label: "à partir des images" },
+    ],
+    demoCta: {
+      href: "#contact",
+      label: "Démo sur demande : contactez-moi.",
+    },
+    image: {
+      src: "/projects/releve.png",
+      alt: "Page d’accueil de Relève : compte rendu d’intervention avec photos avant et après.",
+      width: 1048,
+      height: 760,
+    },
+  },
+  {
+    slug: "taskchef",
+    index: "02",
     title: "TaskChef",
     sector: "Projet de formation · gestion de tâches",
     summary:
@@ -64,7 +97,7 @@ export const projects: Project[] = [
   },
   {
     slug: "restaurant",
-    index: "02",
+    index: "03",
     title: "Restaurant",
     sector: "Projet · API Symfony",
     summary:

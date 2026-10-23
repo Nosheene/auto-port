@@ -11,11 +11,11 @@ export function Projects() {
         <div className="max-w-2xl">
           <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">Projets</p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight md:text-4xl">
-            TaskChef et Restaurant, 2 projets qui mettent en œuvre mes compétences front et back.
+            Relève, TaskChef et Restaurant, 3 projets qui mettent en œuvre mes compétences front et
+            back.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Les deux cartes reprennent les dépôts publics : ce que fait l’application, la stack, et
-            le lien vers le code.
+            Chaque carte présente l’application et les technologies. Relève se regarde sur demande.
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export function Projects() {
                 <div className="grid gap-6 p-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] md:p-6">
                 <div>
                   <p className="font-mono text-xs text-primary">
-                    Projet {project.index} · dépôt réel
+                    Projet {project.index} · {project.sourceLabel ?? "dépôt réel"}
                   </p>
                   <h3 className="mt-2 font-heading text-2xl tracking-tight md:text-3xl">
                     {project.title}
@@ -73,8 +73,17 @@ export function Projects() {
                       </li>
                     ))}
                   </ul>
-                  {project.repoUrl || project.demoUrl ? (
+                  {project.repoUrl || project.demoUrl || project.demoCta ? (
                     <div className="mt-4 flex flex-wrap gap-3 text-sm">
+                      {project.demoCta ? (
+                        <a
+                          href={project.demoCta.href}
+                          data-testid={`project-demo-${project.slug}`}
+                          className="inline-flex items-center gap-1 font-medium text-primary underline-offset-4 hover:underline"
+                        >
+                          {project.demoCta.label}
+                        </a>
+                      ) : null}
                       {project.repoUrl ? (
                         <a
                           href={project.repoUrl}
@@ -114,7 +123,23 @@ export function Projects() {
                     ))}
                   </dl>
                 </div>
-                <TestArtifact slug={project.slug} artifact={project.artifact} />
+                {project.artifact ? (
+                  <TestArtifact slug={project.slug} artifact={project.artifact} />
+                ) : (
+                  <div
+                    data-testid={`project-aside-${project.slug}`}
+                    className="rounded-xl border border-border bg-background p-4"
+                  >
+                    <p className="font-mono text-xs text-muted-foreground">Technologies</p>
+                    <ul className="mt-3 space-y-2 text-sm">
+                      {project.tools.map((tool) => (
+                        <li key={tool} className="border-l border-primary/40 pl-3">
+                          {tool}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 </div>
               </article>
             ))}

@@ -54,9 +54,24 @@ test.describe("Portfolio QA Automation", () => {
     await expect(toggle).toHaveAttribute("aria-pressed", "true");
   });
 
-  test("affiche les deux projets de formation", async ({ page }) => {
+  test("affiche les projets", async ({ page }) => {
     await page.goto("/");
 
+    await expect(page.getByRole("heading", { level: 2, name: /Relève, TaskChef et Restaurant/ })).toBeVisible();
+    await expect(page.getByTestId("project-card-releve")).toBeVisible();
+    await expect(page.getByTestId("project-image-releve")).toBeVisible();
+    await expect(page.getByTestId("project-image-releve").locator("img")).toHaveAttribute(
+      "alt",
+      /Page d’accueil de Relève/,
+    );
+    await expect(page.getByTestId("project-card-releve")).toContainText("Next.js");
+    await expect(page.getByTestId("project-card-releve")).toContainText("TypeScript");
+    await expect(page.getByTestId("project-demo-releve")).toHaveAttribute("href", "#contact");
+    await expect(page.getByTestId("project-demo-releve")).toHaveText(
+      "Démo sur demande : contactez-moi.",
+    );
+    await expect(page.getByTestId("project-repo-releve")).toHaveCount(0);
+    await expect(page.getByTestId("project-card-releve")).not.toContainText("localhost");
     await expect(page.getByTestId("project-card-taskchef")).toBeVisible();
     await expect(page.getByTestId("project-image-taskchef")).toBeVisible();
     await expect(page.getByTestId("project-image-taskchef").locator("img")).toHaveAttribute(

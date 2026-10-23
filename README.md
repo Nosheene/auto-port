@@ -2,7 +2,7 @@
 
 Portfolio de Nosheene Mohammad, développeur web fullstack : projets front et back, recette et tests d'API. Le site Next.js a des sélecteurs stables et une suite de tests exécutée dans GitHub Actions.
 
-Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS, puis imagerie et biomédical à l’AP-HP). Les projets TaskChef et Restaurant viennent des dépôts publics.
+Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS, puis imagerie et biomédical à l’AP-HP). TaskChef et Restaurant viennent des dépôts publics. Relève est une application Next.js et TypeScript, sans adresse publique : la démo se demande via le formulaire de contact.
 
 ## Stack
 
