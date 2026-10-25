@@ -32,8 +32,29 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "releve",
+    slug: "scrum-flow",
     index: "01",
+    title: "Scrum Flow IA",
+    sector: "Projet · Scrum et intelligence artificielle",
+    summary: "Application pour accompagner un flux Scrum avec l’intelligence artificielle.",
+    context:
+      "Projet réalisé par Nosheene Mohammad. Scrum Flow IA relie la démarche Scrum et une aide par intelligence artificielle.",
+    approach: "Il n’y a pas d’adresse publique. La démonstration se fait sur demande.",
+    tools: [],
+    sourceLabel: "application",
+    metrics: [
+      { value: "Scrum", label: "flux de travail" },
+      { value: "IA", label: "dans l’application" },
+      { value: "Démo", label: "sur demande" },
+    ],
+    demoCta: {
+      href: "#contact",
+      label: "Démo sur demande : contactez-moi.",
+    },
+  },
+  {
+    slug: "releve",
+    index: "02",
     title: "Relève",
     sector: "Projet · comptes rendus pour artisans",
     summary:
@@ -61,7 +82,7 @@ export const projects: Project[] = [
   },
   {
     slug: "taskchef",
-    index: "02",
+    index: "03",
     title: "TaskChef",
     sector: "Projet de formation · gestion de tâches",
     summary:
@@ -97,7 +118,7 @@ export const projects: Project[] = [
   },
   {
     slug: "restaurant",
-    index: "03",
+    index: "04",
     title: "Restaurant",
     sector: "Projet · API Symfony",
     summary:

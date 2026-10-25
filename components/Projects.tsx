@@ -11,11 +11,12 @@ export function Projects() {
         <div className="max-w-2xl">
           <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">Projets</p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight md:text-4xl">
-            Relève, TaskChef et Restaurant, 3 projets qui mettent en œuvre mes compétences front et
-            back.
+            Scrum Flow IA, Relève, TaskChef et Restaurant, 4 projets qui mettent en œuvre mes
+            compétences front et back.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Chaque carte présente l’application et les technologies. Relève se regarde sur demande.
+            Chaque carte présente l’application et les technologies. Scrum Flow IA et Relève se
+            regardent sur demande.
           </p>
         </div>
 
@@ -63,16 +64,18 @@ export function Projects() {
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {project.approach}
                   </p>
-                  <ul className="mt-4 flex flex-wrap gap-2" aria-label="Outils">
-                    {project.tools.map((tool) => (
-                      <li
-                        key={tool}
-                        className="rounded-full border border-border px-2.5 py-1 font-mono text-[11px]"
-                      >
-                        {tool}
-                      </li>
-                    ))}
-                  </ul>
+                  {project.tools.length > 0 ? (
+                    <ul className="mt-4 flex flex-wrap gap-2" aria-label="Outils">
+                      {project.tools.map((tool) => (
+                        <li
+                          key={tool}
+                          className="rounded-full border border-border px-2.5 py-1 font-mono text-[11px]"
+                        >
+                          {tool}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                   {project.repoUrl || project.demoUrl || project.demoCta ? (
                     <div className="mt-4 flex flex-wrap gap-3 text-sm">
                       {project.demoCta ? (
@@ -125,7 +128,7 @@ export function Projects() {
                 </div>
                 {project.artifact ? (
                   <TestArtifact slug={project.slug} artifact={project.artifact} />
-                ) : (
+                ) : project.tools.length > 0 ? (
                   <div
                     data-testid={`project-aside-${project.slug}`}
                     className="rounded-xl border border-border bg-background p-4"
@@ -138,6 +141,16 @@ export function Projects() {
                         </li>
                       ))}
                     </ul>
+                  </div>
+                ) : (
+                  <div
+                    data-testid={`project-aside-${project.slug}`}
+                    className="rounded-xl border border-border bg-background p-4"
+                  >
+                    <p className="font-mono text-xs text-muted-foreground">Démo</p>
+                    <p className="mt-3 text-sm leading-relaxed">
+                      La démonstration se fait sur demande, par message.
+                    </p>
                   </div>
                 )}
                 </div>

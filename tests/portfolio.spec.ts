@@ -57,7 +57,16 @@ test.describe("Portfolio QA Automation", () => {
   test("affiche les projets", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.getByRole("heading", { level: 2, name: /Relève, TaskChef et Restaurant/ })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: /Scrum Flow IA, Relève, TaskChef et Restaurant/ }),
+    ).toBeVisible();
+    await expect(page.getByTestId("project-card-scrum-flow")).toBeVisible();
+    await expect(page.getByTestId("project-card-scrum-flow")).toContainText("Scrum Flow IA");
+    await expect(page.getByTestId("project-demo-scrum-flow")).toHaveAttribute("href", "#contact");
+    await expect(page.getByTestId("project-demo-scrum-flow")).toHaveText(
+      "Démo sur demande : contactez-moi.",
+    );
+    await expect(page.getByTestId("project-repo-scrum-flow")).toHaveCount(0);
     await expect(page.getByTestId("project-card-releve")).toBeVisible();
     await expect(page.getByTestId("project-image-releve")).toBeVisible();
     await expect(page.getByTestId("project-image-releve").locator("img")).toHaveAttribute(
