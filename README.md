@@ -2,7 +2,7 @@
 
 Portfolio de Nosheene Mohammad, développeur web fullstack : projets front et back, recette et tests d'API. Le site Next.js a des sélecteurs stables et une suite de tests exécutée dans GitHub Actions.
 
-Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS, puis imagerie et biomédical à l’AP-HP). TaskChef et Restaurant viennent des dépôts publics. Relève est une application Next.js et TypeScript, sans adresse publique : la démo se demande via le formulaire de contact. Scrum Flow IA non plus n’a pas d’adresse publique : la carte affiche une vidéo de démo, et la démonstration complète se demande via le formulaire de contact.
+Le parcours professionnel affiché est réel (intégration e-learning, recette, LMS, puis imagerie et biomédical à l’AP-HP). TaskChef et Restaurant viennent des dépôts publics. Relève est une application Next.js et TypeScript, sans adresse publique : la démo se demande via le formulaire de contact. Scrum Flow IA est une application React 19, TypeScript et Vite, sans adresse publique : la carte liste ses technologies, affiche une vidéo de démo, et la démonstration complète se demande via le formulaire de contact.
 
 ## Stack
 

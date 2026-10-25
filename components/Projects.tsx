@@ -83,7 +83,34 @@ export function Projects() {
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {project.approach}
                   </p>
-                  {project.tools.length > 0 ? (
+                  {project.stackGroups ? (
+                    <div
+                      data-testid={`project-stack-${project.slug}`}
+                      className="mt-4 space-y-3"
+                    >
+                      {project.stackGroups.map((group) => (
+                        <div key={group.title}>
+                          <p className="font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+                            {group.title}
+                          </p>
+                          <ul className="mt-2 flex flex-wrap gap-2" aria-label={group.title}>
+                            {group.items.map((item) => (
+                              <li
+                                key={item.name}
+                                title={item.detail}
+                                className="rounded-full border border-border px-2.5 py-1 font-mono text-[11px]"
+                              >
+                                {item.name}
+                                {item.detail ? (
+                                  <span className="sr-only">, {item.detail}</span>
+                                ) : null}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  ) : project.tools.length > 0 ? (
                     <ul className="mt-4 flex flex-wrap gap-2" aria-label="Outils">
                       {project.tools.map((tool) => (
                         <li
@@ -147,6 +174,30 @@ export function Projects() {
                 </div>
                 {project.artifact ? (
                   <TestArtifact slug={project.slug} artifact={project.artifact} />
+                ) : project.stackGroups ? (
+                  <div
+                    data-testid={`project-aside-${project.slug}`}
+                    className="rounded-xl border border-border bg-background p-4"
+                  >
+                    <p className="font-mono text-xs text-muted-foreground">Technologies</p>
+                    {project.stackGroups.map((group) => (
+                      <div key={group.title}>
+                        <p className="mt-4 font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
+                          {group.title}
+                        </p>
+                        <ul className="mt-2 space-y-2 text-sm">
+                          {group.items.map((item) => (
+                            <li key={item.name} className="border-l border-primary/40 pl-3">
+                              <span>{item.name}</span>
+                              {item.detail ? (
+                                <span className="text-muted-foreground"> — {item.detail}</span>
+                              ) : null}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 ) : project.tools.length > 0 ? (
                   <div
                     data-testid={`project-aside-${project.slug}`}

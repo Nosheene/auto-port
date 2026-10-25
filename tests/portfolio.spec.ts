@@ -62,9 +62,22 @@ test.describe("Portfolio QA Automation", () => {
     ).toBeVisible();
     await expect(page.getByTestId("project-card-scrum-flow")).toBeVisible();
     await expect(page.getByTestId("project-card-scrum-flow")).toContainText("Scrum Flow IA");
-    await expect(page.getByTestId("project-card-scrum-flow")).toContainText("Next.js");
-    await expect(page.getByTestId("project-card-scrum-flow")).toContainText("TypeScript");
-    await expect(page.getByTestId("project-aside-scrum-flow")).toContainText("Next.js");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("React 19");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("TypeScript");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("Vite");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("Tailwind CSS");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("Zustand");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("@hello-pangea/dnd");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("Vitest");
+    await expect(page.getByTestId("project-stack-scrum-flow")).toContainText("Oxlint");
+    await expect(page.getByTestId("project-card-scrum-flow")).not.toContainText("Next.js");
+    await expect(page.getByTestId("project-aside-scrum-flow")).toContainText("Interface");
+    await expect(page.getByTestId("project-aside-scrum-flow")).toContainText(
+      "seulement si une clé est ajoutée",
+    );
+    await expect(page.getByTestId("project-aside-scrum-flow")).toContainText(
+      "seulement si une adresse est ajoutée",
+    );
     await expect(page.getByTestId("project-demo-scrum-flow")).toHaveAttribute("href", "#contact");
     await expect(page.getByTestId("project-demo-scrum-flow")).toHaveText(
       "Démo sur demande : contactez-moi.",

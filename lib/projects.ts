@@ -13,6 +13,10 @@ export type Project = {
   context: string;
   approach: string;
   tools: string[];
+  stackGroups?: {
+    title: string;
+    items: { name: string; detail?: string }[];
+  }[];
   metrics: { value: string; label: string }[];
   artifact?: RoutesArtifact;
   repoUrl?: string;
@@ -44,7 +48,78 @@ export const projects: Project[] = [
     context:
       "Projet réalisé par Nosheene Mohammad. Scrum Flow IA relie la démarche Scrum et une aide par intelligence artificielle.",
     approach: "Il n’y a pas d’adresse publique. La démonstration se fait sur demande.",
-    tools: ["Next.js", "TypeScript"],
+    tools: [
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "shadcn/ui et Radix UI",
+      "Lucide",
+      "Geist et Fraunces",
+      "Zustand",
+      "@hello-pangea/dnd",
+      "Recharts",
+      "Zod",
+      "Sonner",
+      "Node.js",
+      "API compatible OpenAI",
+      "Webhook Slack ou Discord",
+      "Vitest",
+      "Oxlint",
+      "GitHub Actions",
+    ],
+    stackGroups: [
+      {
+        title: "Interface",
+        items: [
+          { name: "React 19" },
+          { name: "TypeScript" },
+          { name: "Vite" },
+          { name: "Tailwind CSS" },
+          { name: "shadcn/ui et Radix UI" },
+          { name: "Lucide", detail: "pour les icônes" },
+          { name: "Geist et Fraunces", detail: "pour les polices" },
+        ],
+      },
+      {
+        title: "Fonctionnement de l’application",
+        items: [
+          {
+            name: "Zustand",
+            detail: "pour l’état du tableau, enregistré dans le navigateur",
+          },
+          { name: "@hello-pangea/dnd", detail: "pour le glisser-déposer" },
+          { name: "Recharts", detail: "pour le burndown" },
+          { name: "Zod", detail: "pour contrôler les textes renvoyés par un modèle" },
+          { name: "Sonner", detail: "pour les notifications à l’écran" },
+        ],
+      },
+      {
+        title: "Serveur léger, optionnel",
+        items: [
+          { name: "Node.js", detail: "branché dans Vite" },
+          {
+            name: "API compatible OpenAI",
+            detail: "seulement si une clé est ajoutée",
+          },
+          {
+            name: "Webhook Slack ou Discord",
+            detail: "seulement si une adresse est ajoutée",
+          },
+        ],
+      },
+      {
+        title: "Qualité",
+        items: [
+          { name: "Vitest", detail: "pour les tests" },
+          { name: "Oxlint", detail: "pour le lint" },
+          {
+            name: "GitHub Actions",
+            detail: "pour lancer tests, lint et build à chaque envoi",
+          },
+        ],
+      },
+    ],
     sourceLabel: "application",
     metrics: [
       { value: "Scrum", label: "flux de travail" },
