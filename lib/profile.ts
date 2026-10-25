@@ -1,7 +1,6 @@
 export const profile = {
   name: "Nosheene Mohammad",
   role: "Développeur web fullstack",
-  location: "Ozoir-la-Ferrière",
   region: "Île-de-France",
   english: "Anglais B2",
   email: "mohammadnosheene@gmail.com",

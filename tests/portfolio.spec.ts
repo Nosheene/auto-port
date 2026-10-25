@@ -34,8 +34,11 @@ test.describe("Portfolio QA Automation", () => {
       "mailto:mohammadnosheene@gmail.com",
     );
     await expect(page.getByTestId("contact-phone-link")).toHaveAttribute("href", "tel:+33684477119");
+    await expect(page.getByTestId("hero")).toContainText("Île-de-France");
+    await expect(page.getByTestId("hero")).not.toContainText("Ozoir");
     await expect(page.getByTestId("contact")).not.toContainText("Ozoir");
     await expect(page.locator("footer")).not.toContainText("Ozoir");
+    await expect(page.locator("body")).not.toContainText("Ozoir");
     await expect(page.getByTestId("footer-phone")).toHaveAttribute("href", "tel:+33684477119");
   });
 

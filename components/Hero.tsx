@@ -69,7 +69,7 @@ export function Hero() {
           </div>
 
           <p className="mt-6 font-mono text-xs text-muted-foreground">
-            {profile.location} · {profile.region} · {profile.english}
+            {profile.region} · {profile.english}
           </p>
         </div>
 

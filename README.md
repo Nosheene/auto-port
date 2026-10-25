@@ -79,7 +79,7 @@ npx playwright show-report
 
 ## Contact
 
-Nosheene Mohammad — Ozoir-la-Ferrière  
+Nosheene Mohammad — Île-de-France  
 [mohammadnosheene@gmail.com](mailto:mohammadnosheene@gmail.com)  
 [06 84 47 71 19](tel:+33684477119)  
 [LinkedIn](https://www.linkedin.com/in/nosheene-mohammad-498980160)
