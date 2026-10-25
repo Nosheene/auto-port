@@ -118,9 +118,6 @@ export function Contact() {
                 {profile.linkedinLabel}
               </a>
             </li>
-            <li className="text-muted-foreground">
-              {profile.location}, {profile.region}
-            </li>
           </ul>
         </div>
 
