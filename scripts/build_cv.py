@@ -229,7 +229,7 @@ def build() -> Document:
     set_paragraph_spacing(contact, before=1, after=0, line=210)
     contact.paragraph_format.keep_with_next = True
     add_left_border(contact)
-    add_text(contact, "Ozoir-la-Ferrière  ·  06 84 47 71 19  ·  ", 10, color=MUTED)
+    add_text(contact, "06 84 47 71 19  ·  ", 10, color=MUTED)
     add_hyperlink(contact, "mohammadnosheene@gmail.com", "mailto:mohammadnosheene@gmail.com", 10)
 
     links = document.add_paragraph()
