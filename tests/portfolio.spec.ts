@@ -62,6 +62,9 @@ test.describe("Portfolio QA Automation", () => {
     ).toBeVisible();
     await expect(page.getByTestId("project-card-scrum-flow")).toBeVisible();
     await expect(page.getByTestId("project-card-scrum-flow")).toContainText("Scrum Flow IA");
+    await expect(page.getByTestId("project-card-scrum-flow")).toContainText("Next.js");
+    await expect(page.getByTestId("project-card-scrum-flow")).toContainText("TypeScript");
+    await expect(page.getByTestId("project-aside-scrum-flow")).toContainText("Next.js");
     await expect(page.getByTestId("project-demo-scrum-flow")).toHaveAttribute("href", "#contact");
     await expect(page.getByTestId("project-demo-scrum-flow")).toHaveText(
       "Démo sur demande : contactez-moi.",

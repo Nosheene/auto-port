@@ -40,7 +40,7 @@ export const projects: Project[] = [
     context:
       "Projet réalisé par Nosheene Mohammad. Scrum Flow IA relie la démarche Scrum et une aide par intelligence artificielle.",
     approach: "Il n’y a pas d’adresse publique. La démonstration se fait sur demande.",
-    tools: [],
+    tools: ["Next.js", "TypeScript"],
     sourceLabel: "application",
     metrics: [
       { value: "Scrum", label: "flux de travail" },
