@@ -28,6 +28,10 @@ export type Project = {
     width: number;
     height: number;
   };
+  video?: {
+    src: string;
+    label: string;
+  };
 };
 
 export const projects: Project[] = [
@@ -50,6 +54,10 @@ export const projects: Project[] = [
     demoCta: {
       href: "#contact",
       label: "Démo sur demande : contactez-moi.",
+    },
+    video: {
+      src: "/projects/scrum-flow-demo.mp4",
+      label: "Démo de Scrum Flow IA : attribution, revue d’une story et rituels.",
     },
   },
   {

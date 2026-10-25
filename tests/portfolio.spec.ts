@@ -70,6 +70,17 @@ test.describe("Portfolio QA Automation", () => {
       "Démo sur demande : contactez-moi.",
     );
     await expect(page.getByTestId("project-repo-scrum-flow")).toHaveCount(0);
+    await expect(page.getByTestId("project-card-scrum-flow")).not.toContainText("localhost");
+    const scrumVideo = page.getByTestId("project-video-scrum-flow").locator("video");
+    await expect(scrumVideo).toBeVisible();
+    await expect(scrumVideo).toHaveAttribute("src", "/projects/scrum-flow-demo.mp4");
+    await expect(scrumVideo).toHaveAttribute("controls", "");
+    await expect(page.getByTestId("project-video-scrum-flow")).toContainText(
+      "Démo de Scrum Flow IA : attribution, revue d’une story et rituels.",
+    );
+    const videoResponse = await page.request.get("/projects/scrum-flow-demo.mp4");
+    expect(videoResponse.status()).toBe(200);
+    expect(videoResponse.headers()["content-type"] ?? "").toContain("video");
     await expect(page.getByTestId("project-card-releve")).toBeVisible();
     await expect(page.getByTestId("project-image-releve")).toBeVisible();
     await expect(page.getByTestId("project-image-releve").locator("img")).toHaveAttribute(

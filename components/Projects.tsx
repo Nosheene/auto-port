@@ -27,6 +27,25 @@ export function Projects() {
                 data-testid={`project-card-${project.slug}`}
                 className="overflow-hidden rounded-2xl border border-border bg-card"
               >
+                {project.video ? (
+                  <figure
+                    data-testid={`project-video-${project.slug}`}
+                    className="border-b border-border bg-black"
+                  >
+                    <video
+                      src={project.video.src}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="mx-auto max-h-[32rem] w-full"
+                    >
+                      {project.video.label}
+                    </video>
+                    <figcaption className="bg-card px-5 py-2 text-xs text-muted-foreground">
+                      {project.video.label}
+                    </figcaption>
+                  </figure>
+                ) : null}
                 {project.image ? (
                   <figure
                     data-testid={`project-image-${project.slug}`}
